@@ -4,6 +4,10 @@
 const express = require("express");
 const path = require("path");
 const mongoose = require("mongoose");
+const swaggerUI = require("swagger-ui-express");
+const swaggerJSdoc = require("swagger-jsdoc");
+const UserAPI = require("./routes/user-api");
+const SecurityQuestionAPI = require("./routes/security-question-api");
 
 const app = express(); // Express variable.
 
@@ -35,6 +39,25 @@ mongoose
   .catch((err) => {
     console.log("MongoDB Error: " + err.message);
   });
+
+/**
+ * Swagger Setup
+ */
+const options = {
+  definition: {
+    openapi: "3.0.0",
+    info: {
+      title: "BCRS",
+      version: "1.0.0",
+    },
+  },
+  apis: ["./server/routes/*.js"], // files containing swagger
+};
+const openapiSpecification = swaggerJSdoc(options);
+app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(openapiSpecification));
+
+app.use("/api/users", UserAPI);
+app.use("/api/security-questions", SecurityQuestionAPI);
 
 // Wire-up the Express server.
 app.listen(PORT, () => {
