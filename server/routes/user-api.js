@@ -162,6 +162,7 @@ router.get('/:userId', async (req, res) => {
  */
 router.post("/", async (req, res) => {
   try {
+    // assign request data to newUser object
     let newUser = {
       userName: req.body.userName,
       firstName: req.body.firstName,
@@ -171,6 +172,8 @@ router.post("/", async (req, res) => {
       address: req.body.address,
       securityQuestions: req.body.securityQuestions
     };
+
+    // create new user in database using newUser object
     User.create(newUser, function(err, user) {
       if(err) {
         res.status(501).send({
@@ -189,12 +192,103 @@ router.post("/", async (req, res) => {
 
 /**
  * updateUser
+ * @openapi
+ * /api/users/{id}
+ *  put:
+ *    tags:
+ *      - Users
+ *    description: Updates existing user
+ *    summary: Updates existing user
+ *    parameters:
+ *      - in: path
+ *        name: id
+ *        schema:
+ *          type: number
+ *          description: id to update
+ *    requestBody:
+ *      content:
+ *        application/json:
+ *          schema:
+ *            required:
+ *              - userName
+ *              - firstName
+ *              - lastName
+ *              - phoneNumber
+ *              - emailAddress
+ *              - address
+ *              - securityQuestions
+ *            properties:
+ *              userName:
+ *                type: string
+ *              firstName:
+ *                type: string
+ *              lastName:
+ *                type: string
+ *              phoneNumber:
+ *                type: number
+ *              emailAddress:
+ *                type: string
+ *              address:
+ *                type: string
+ *              securityQuestions: 
+ *                type: array
+ *                items:
+ *                  type: object
+ *                  properties:
+ *                    questionText:
+ *                      type: string
+ *                    questionAnswer:
+ *                      type: string
+ *    responses:
+ *      '200':
+ *        description: Employee document
+ *      '500':
+ *        description: Server Exception
+ *      '501':
+ *        description: MongoDB Exception
+ *
  */
+router.put('/:empId/tasks', async(req, res) => {
+  // gets single employee by empId, replaces todo and done arrays
+  try {
+    User.findOne({'_id': req.params.id}, function(err, user) {
+      if(err) {
+        console.log(err);
+        res.status(501).send({
+          "message": `MongoDB Exception: ${err}`
+        })
+      } else {
+        if(user) {
+          user.set({
+            todo: req.body.todo,
+            done: req.body.done
+          })
+          user.save(function(err, updatedUser) {
+            if(err) {
+              console.log(err);
+              res.status(501).send({
+                "message": `MongoDB Exception: ${err}`
+              })
+            } else {
+              res.json(updatedUser);
+            }
+          })
+        } else {
+          res.status(401).send({
+            'message': 'EmployeeId: ' + req.params.empId + ' does not exist'
+          })
+        }
+
+      }
+    })
+  } catch (error) {
+    res.status(500).send({
+      'err': 'Internal Server Error: ' + error.message
+    });
+  }
+})
 
 // ((soft delete))
 
-/**
- * deleteUser
- */
 
 module.exports = router;
