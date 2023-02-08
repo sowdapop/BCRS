@@ -1,6 +1,6 @@
 /**
  * Title:  security-question-api.js
- * Author: Danial Purselley
+ * Author: Danial Purselley, William Watlington
  * Date: 7 Feb 2023
  * Description: SQ API
  *   for BCRS database
@@ -211,6 +211,25 @@ router.get('/:questionId', async (req, res) => {
  *       - Security Questions
  *     description: API for updated a specific question
  *     summary: update question by ID
+ *     parameters:
+ *      - in: path
+ *        name: id
+ *        schema:
+ *          type: string
+ *          description: id to update
+ *     requestBody:
+ *       description: security question fields
+ *       content:
+ *         application/json:
+ *           schema:
+ *             required:
+ *               - questionText
+ *             properties:
+ *               questionText:
+ *                 type: string
+ *               isDisabled:
+ *                 type: boolean
+ *                 default: false
  *     responses:
  *       '200':
  *         description: Question updated
@@ -219,6 +238,42 @@ router.get('/:questionId', async (req, res) => {
  *       '501':
  *         description: MongoDB Exception
  */
+router.put('/:id', async(req, res) => {
+  try{
+    SecurityQuestion.findOne({'_id': req.params.id}, function(err, question) {
+      if(err) {
+        console.log(err);
+        res.status(501).send({
+          "message": `MongoDB Exception: ${err}`
+        })
+      } else {
+        if(question) {
+          question.set({
+            questionText: req.body.questionText
+          })
+          question.save(function(err, updatedQuestion) {
+            if(err) {
+              console.log(err);
+              res.status(501).send({
+                "message": `MongoDB Exception: ${err}`
+              })
+            } else {
+              res.json(updatedQuestion);
+            }
+          })
+        } else {
+          res.status(401).send({
+            'message': 'Question ID: ' +  req.params.id + ' not found'
+          })
+        }
+      }
+    })
+  } catch (error) {
+    res.status(500).send({
+      'err': 'Internal Server Error: ' + error.message
+    });
+  }
+})
 
 /**
  * deleteSecurityQuestion
