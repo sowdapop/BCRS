@@ -8,8 +8,11 @@
 
 const express = require("express");
 const router = express.Router();
+const bcrypt = require('bcryptjs');
 
 const User = require("../models/user");
+
+saltRounds = 10;
 
 /**
  * findAll
@@ -123,6 +126,7 @@ router.get('/:userId', async (req, res) => {
  *          schema:
  *            required:
  *              - userName
+ *              - password
  *              - firstName
  *              - lastName
  *              - phoneNumber
@@ -131,6 +135,8 @@ router.get('/:userId', async (req, res) => {
  *              - securityQuestions
  *            properties:
  *              userName:
+ *                type: string
+ *              password:
  *                type: string
  *              firstName:
  *                type: string
@@ -162,9 +168,12 @@ router.get('/:userId', async (req, res) => {
  */
 router.post("/", async (req, res) => {
   try {
+    const hashedPassword = bcrypt.hashSync(req.body.password, saltRounds); // hash password
+
     // assign request data to newUser object
     let newUser = {
       userName: req.body.userName,
+      password: hashedPassword,
       firstName: req.body.firstName,
       lastName: req.body.lastName,
       phoneNumber: req.body.phoneNumber,
@@ -193,7 +202,7 @@ router.post("/", async (req, res) => {
 /**
  * updateUser
  * @openapi
- * /api/users/{id}
+ * /api/users/{id}:
  *  put:
  *    tags:
  *      - Users
@@ -203,7 +212,7 @@ router.post("/", async (req, res) => {
  *      - in: path
  *        name: id
  *        schema:
- *          type: number
+ *          type: string
  *          description: id to update
  *    requestBody:
  *      content:
@@ -219,6 +228,8 @@ router.post("/", async (req, res) => {
  *              - securityQuestions
  *            properties:
  *              userName:
+ *                type: string
+ *              password:
  *                type: string
  *              firstName:
  *                type: string
@@ -241,15 +252,15 @@ router.post("/", async (req, res) => {
  *                      type: string
  *    responses:
  *      '200':
- *        description: Employee document
+ *        description: User document
  *      '500':
  *        description: Server Exception
  *      '501':
  *        description: MongoDB Exception
  *
  */
-router.put('/:empId/tasks', async(req, res) => {
-  // gets single employee by empId, replaces todo and done arrays
+router.put('/:id', async(req, res) => {
+  // get user by id, update fields using request body
   try {
     User.findOne({'_id': req.params.id}, function(err, user) {
       if(err) {
@@ -259,9 +270,19 @@ router.put('/:empId/tasks', async(req, res) => {
         })
       } else {
         if(user) {
+          if(req.body.password) {
+            const hashedPassword = bcrypt.hashSync(req.body.password, saltRounds);
+            user.set({password: hashedPassword});
+          }
           user.set({
-            todo: req.body.todo,
-            done: req.body.done
+            userName: req.body.userName,
+            firstName: req.body.firstName,
+            lastName: req.body.lastName,
+            phoneNumber: req.body.phoneNumber,
+            emailAddress: req.body.emailAddress,
+            address: req.body.address,
+            securityQuestions: req.body.securityQuestions,
+            dateModified: Date.now()
           })
           user.save(function(err, updatedUser) {
             if(err) {
@@ -275,8 +296,8 @@ router.put('/:empId/tasks', async(req, res) => {
           })
         } else {
           res.status(401).send({
-            'message': 'EmployeeId: ' + req.params.empId + ' does not exist'
-          })
+            'message': 'ID: ' + req.params.id + ' does not exist'
+          });
         }
 
       }
@@ -288,7 +309,67 @@ router.put('/:empId/tasks', async(req, res) => {
   }
 })
 
-// ((soft delete))
+/**
+ * deleteUser
+ * @openapi
+ * /api/users/{id}:
+ *  delete:
+ *    tags:
+ *      - Users
+ *    description: Sets existing user to disabled
+ *    summary: Sets existing user to disabled
+ *    parameters:
+ *      - in: path
+ *        name: id
+ *        schema:
+ *          type: string
+ *          description: id to update
+ *    responses:
+ *      '200':
+ *        description: User document
+ *      '500':
+ *        description: Server Exception
+ *      '501':
+ *        description: MongoDB Exception
+ *
+ */
+router.delete('/:id', async(req, res) => {
+  try {
+    // finds user by id, then sets "isDisabled" to true
+    User.findOne({'_id': req.params.id}, function(err, user) {
+      if(err) {
+        console.log(err);
+        res.status(501).send({
+          "message": `MongoDB Exception: ${err}`
+        })
+      } else {
+        if(user) {
+          user.set({
+            isDisabled: true
+          })
+          user.save(function(err, updatedUser) {
+            if(err) {
+              console.log(err);
+              res.status(501).send({
+                "message": `MongoDB Exception: ${err}`
+              })
+            } else {
+              res.json(updatedUser);
+            }
+          })
+        } else {
+          res.status(401).send({
+            'message': 'ID: ' + req.params.id + ' does not exist'
+          });
+        }
 
+      }
+    })
+  } catch (error) {
+    res.status(500).send({
+      'err': 'Internal Server Error: ' + error.message
+    });
+  }
+})
 
 module.exports = router;

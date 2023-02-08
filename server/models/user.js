@@ -16,6 +16,7 @@ let selectedSecurityQuestionSchema = new Schema({
 
 let userSchema = new Schema({
   userName: { type: String, unique: true, required: true },
+  password: { type: String, required: true},
   firstName: { type: String },
   lastName: { type: String },
   phoneNumber: { type: String },
@@ -25,7 +26,8 @@ let userSchema = new Schema({
   userRole: { type: String, default: "standard" },
   securityQuestions: [selectedSecurityQuestionSchema],
   dateCreated: { type: Date, default: Date.now() },
-  dateModified: { type: Date, default: Date.now() }
+  dateModified: { type: Date, default: Date.now() },
+  isDisabled: { type: Boolean, default: false }
 });
 
 module.exports = mongoose.model("Users", userSchema);
