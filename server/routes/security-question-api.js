@@ -173,6 +173,35 @@ router.get("/", async (req, res) => {
  *         description: MongoDB Exception
  */
 
+router.get('/:questionId', async (req, res) => {
+  try
+    {
+      //Find the question for a given question ID
+      SecurityQuestion.findOne({'questionId': req.params.questionId}, function(err, question) {
+        //If there is a database error, return the 501 error message
+        if (err)  
+        {
+          console.log(err);
+            res.status(501).send({
+              'err': 'MongoDB Server Error: ' + err.message
+          })
+          //If there is no error, return the questions for the user ID
+        } else {
+          console.log(question);
+          //Returns data as JSON
+          res.json(question);
+        }
+      })
+      //If there are server errors, return the 500 error message
+    } catch (e) 
+      {
+        console.log(err);
+          res.status(500).send({
+            'err': 'Internal Server Error: ' + error.message
+      })
+    }
+})
+
 /**
  * updateSecurityQuestion
  * @openapi

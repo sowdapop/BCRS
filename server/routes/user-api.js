@@ -62,8 +62,51 @@ router.get("/", async (req, res) => {
 });
 
 /**
- * findUserById
+ * findAll
+ * @openapi
+ * /api/users/:userId:
+ *   get:
+ *     tags:
+ *       - Users
+ *     description: API for finding user by ID.
+ *     summary: Finds and returns user by ID
+ *     responses:
+ *       '200':
+ *         description: List of user docs
+ *       '500':
+ *         description: Server Exception
+ *       '501':
+ *         description: MongoDB Exception
  */
+
+router.get('/:userId', async (req, res) => {
+  try
+    {
+      //Find the user information for a given user ID
+      User.findOne({'userId': req.params.userId}, function(err, user) {
+        //If there is a database error, return the 501 error message
+        if (err)  
+        {
+          console.log(err);
+            res.status(501).send({
+              'err': 'MongoDB Server Error: ' + err.message
+          })
+          //If there is no error, return the information for the user ID
+        } else {
+          console.log(user);
+          //Returns data as JSON
+          res.json(user);
+        }
+      })
+      //If there are server errors, return the 500 error message
+    } catch (e) 
+      {
+        console.log(err);
+          res.status(500).send({
+            'err': 'Internal Server Error: ' + error.message
+      })
+    }
+})
 
 /**
  * createUser

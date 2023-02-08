@@ -11,8 +11,14 @@ const Schema = mongoose.Schema;
 const selectedSecurityQuestionSchema = require("./security-question");
 
 let userSchema = new Schema({
+  userId: { type: Number, unique: true, required: true },
   firstName: { type: String },
   lastName: { type: String },
+  phoneNumber: { type: String },
+  email: { type: String },
+  address: {type: String },
+  //Will need to change this when 'role' schema is made
+  userRole: { type: String }
 });
 
 module.exports = mongoose.model("Users", userSchema);

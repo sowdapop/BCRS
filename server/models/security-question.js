@@ -10,6 +10,7 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 let selectedSecurityQuestionSchema = new Schema({
+  questionId: { type: Number, unique: true, required: true },
   questionText: { type: String },
   answerText: { type: String },
   isDisabled: { type: Boolean, default: false },
