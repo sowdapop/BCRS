@@ -1,6 +1,6 @@
 /**
  * Title:  user-api.js
- * Author: Danial Purselley
+ * Author: Danial Purselley, William Watlington
  * Date: 7 Feb 2023
  * Description: user API
  *   for BCRS database
@@ -56,7 +56,7 @@ router.get("/", async (req, res) => {
      */
     console.log(error);
     res.status(500).send({
-      err: "Internal server error: " + error.message,
+      'err' : "Internal server error: " + error.message,
     });
   }
 });
@@ -99,9 +99,9 @@ router.get('/:userId', async (req, res) => {
         }
       })
       //If there are server errors, return the 500 error message
-    } catch (e) 
+    } catch (error) 
       {
-        console.log(err);
+        console.log(error);
           res.status(500).send({
             'err': 'Internal Server Error: ' + error.message
       })
@@ -110,10 +110,81 @@ router.get('/:userId', async (req, res) => {
 
 /**
  * createUser
+ * @openapi
+ * /api/users:
+ *  post:
+ *    tags:
+ *      - Users
+ *    description: Creates new user
+ *    summary: Creates new user
+ *    requestBody:
+ *      content:
+ *        application/json:
+ *          schema:
+ *            required:
+ *              - userName
+ *              - firstName
+ *              - lastName
+ *              - phoneNumber
+ *              - emailAddress
+ *              - address
+ *              - securityQuestions
+ *            properties:
+ *              userName:
+ *                type: string
+ *              firstName:
+ *                type: string
+ *              lastName:
+ *                type: string
+ *              phoneNumber:
+ *                type: number
+ *              emailAddress:
+ *                type: string
+ *              address:
+ *                type: string
+ *              securityQuestions: 
+ *                type: array
+ *                items:
+ *                  type: object
+ *                  properties:
+ *                    questionText:
+ *                      type: string
+ *                    questionAnswer:
+ *                      type: string
+ *    responses:
+ *      '200':
+ *        description: User document
+ *      '500':
+ *        description: Server Exception
+ *      '501':
+ *        description: MongoDB Exception
+ *
  */
 router.post("/", async (req, res) => {
   try {
-  } catch (error) {}
+    let newUser = {
+      userName: req.body.userName,
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      phoneNumber: req.body.phoneNumber,
+      emailAddress: req.body.emailAddress,
+      address: req.body.address,
+      securityQuestions: req.body.securityQuestions
+    };
+    User.create(newUser, function(err, user) {
+      if(err) {
+        res.status(501).send({
+            "message": `MongoDB Exception: ${err}`
+        });
+    } else {
+      res.json(user);
+    }
+    })
+  } catch (error) {
+    res.status(500).send({
+      'err': 'Internal Server Error: ' + error.message
+    });
+  }
 });
 
 /**

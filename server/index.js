@@ -26,11 +26,10 @@ const PORT = process.env.PORT || 3000;
 const CONN =
   "mongodb+srv://bcrsAdmin:s3cret@buwebdev-cluster-1.078ar.mongodb.net/bcrs?retryWrites=true&w=majority";
 
-// mongodb+srv://bcrsAdmin:s3cret@buwebdev-cluster-1.078ar.mongodb.net/bcrs?retryWrites=true&w=majority
-
-/**
+  /**
  * Database connection.
  */
+mongoose.set('strictQuery', false); // set strictQuery to false for mongoose 7
 mongoose
   .connect(CONN)
   .then(() => {
