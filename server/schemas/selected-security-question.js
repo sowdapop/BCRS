@@ -10,14 +10,11 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 /**
- * Set the exportable schema for making security questions
+ * Set the exportable schema for selecting security questions
  */
-let securityQuestionSchema = new Schema(
-  {
-    text: { type: String },
-    isDisabled: { type: Boolean, default: false },
-  },
-  { collection: "securityquestions" } // write to the existing collection
-);
+let selectedSecurityQuestionSchema = new Schema({
+  questionText: { type: String },
+  answerText: { type: String },
+});
 
-module.exports = mongoose.model("SecurityQuestion", securityQuestionSchema);
+module.exports = selectedSecurityQuestionSchema;
