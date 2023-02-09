@@ -164,6 +164,12 @@ router.get("/", async (req, res) => {
  *       - Security Questions
  *     description: API for showing one specific question
  *     summary: return question by ID
+ *     parameters:
+ *      - in: path
+ *        name: id
+ *        schema:
+ *          type: string
+ *          description: id to update
  *     responses:
  *       '200':
  *         description: Found question
@@ -172,35 +178,31 @@ router.get("/", async (req, res) => {
  *       '501':
  *         description: MongoDB Exception
  */
-
-router.get('/:questionId', async (req, res) => {
-  try
-    {
-      //Find the question for a given question ID
-      SecurityQuestion.findOne({'questionId': req.params.questionId}, function(err, question) {
-        //If there is a database error, return the 501 error message
-        if (err)  
-        {
-          console.log(err);
-            res.status(501).send({
-              'err': 'MongoDB Server Error: ' + err.message
-          })
-          //If there is no error, return the questions for the user ID
-        } else {
-          console.log(question);
-          //Returns data as JSON
-          res.json(question);
-        }
-      })
-      //If there are server errors, return the 500 error message
-    } catch (e) 
-      {
+router.get("/:id", async (req, res) => {
+  try {
+    //Find the question for a given question ID
+    SecurityQuestion.findOne({ _id: req.params.id }, function (err, question) {
+      //If there is a database error, return the 501 error message
+      if (err) {
         console.log(err);
-          res.status(500).send({
-            'err': 'Internal Server Error: ' + error.message
-      })
-    }
-})
+        res.status(501).send({
+          err: "MongoDB Server Error: " + err.message,
+        });
+        //If there is no error, return the questions for the user ID
+      } else {
+        console.log(question);
+        //Returns data as JSON
+        res.json(question);
+      }
+    });
+    //If there are server errors, return the 500 error message
+  } catch (e) {
+    console.log(err);
+    res.status(500).send({
+      err: "Internal Server Error: " + error.message,
+    });
+  }
+});
 
 /**
  * updateSecurityQuestion
@@ -238,42 +240,42 @@ router.get('/:questionId', async (req, res) => {
  *       '501':
  *         description: MongoDB Exception
  */
-router.put('/:id', async(req, res) => {
-  try{
-    SecurityQuestion.findOne({'_id': req.params.id}, function(err, question) {
-      if(err) {
+router.put("/:id", async (req, res) => {
+  try {
+    SecurityQuestion.findOne({ _id: req.params.id }, function (err, question) {
+      if (err) {
         console.log(err);
         res.status(501).send({
-          "message": `MongoDB Exception: ${err}`
-        })
+          message: `MongoDB Exception: ${err}`,
+        });
       } else {
-        if(question) {
+        if (question) {
           question.set({
-            questionText: req.body.questionText
-          })
-          question.save(function(err, updatedQuestion) {
-            if(err) {
+            questionText: req.body.questionText,
+          });
+          question.save(function (err, updatedQuestion) {
+            if (err) {
               console.log(err);
               res.status(501).send({
-                "message": `MongoDB Exception: ${err}`
-              })
+                message: `MongoDB Exception: ${err}`,
+              });
             } else {
               res.json(updatedQuestion);
             }
-          })
+          });
         } else {
           res.status(401).send({
-            'message': 'Question ID: ' +  req.params.id + ' not found'
-          })
+            message: "Question ID: " + req.params.id + " not found",
+          });
         }
       }
-    })
+    });
   } catch (error) {
     res.status(500).send({
-      'err': 'Internal Server Error: ' + error.message
+      err: "Internal Server Error: " + error.message,
     });
   }
-})
+});
 
 /**
  * deleteSecurityQuestion
@@ -284,6 +286,12 @@ router.put('/:id', async(req, res) => {
  *       - Security Questions
  *     description: API for deleting a specific question
  *     summary: soft delete security question
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: string
+ *           description: id to update
  *     responses:
  *       '200':
  *         description: Question "deleted"
@@ -292,4 +300,56 @@ router.put('/:id', async(req, res) => {
  *       '501':
  *         description: MongoDB Exception
  */
+router.delete("/:id", async (req, res) => {
+  try {
+    /**
+     * Start the DB query by looking up the specific security question
+     */
+    SecurityQuestion.findOne({ _id: req.params.id }, function (err, question) {
+      /**
+       * Handle DB error if question is not found
+       */
+      if (err) {
+        console.log(err);
+        res.status(501).send({
+          message: `MongoDB Exception: ${err}`,
+        });
+      } else {
+        /**
+         * Question found, update isDisabled field to soft delete
+         */
+        question.set({
+          isDisabled: true,
+        });
+        /**
+         * Save the updated question
+         */
+        question.save(function (err, deletedQuestion) {
+          /**
+           * If mongoDB has an err saving the document
+           */
+          if (err) {
+            console.log(err);
+            res.status(501).send({
+              message: `MongoDB Exception: ${err}`,
+            });
+          } else {
+            /**
+             * No errors, document is saved as 'isDisabled = true'
+             */
+            console.log('Question "deleted": ' + deletedQuestion);
+            res.json(deletedQuestion);
+          }
+        });
+      }
+    });
+  } catch (error) {
+    /**
+     * Handle server error
+     */
+    res.status(500).send({
+      err: "Internal Server Error: " + error.message,
+    });
+  }
+});
 module.exports = router;
