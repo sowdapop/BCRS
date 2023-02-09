@@ -24,13 +24,12 @@ const PORT = process.env.PORT || 3000;
 
 const CONN =
   "mongodb+srv://bcrsAdmin:s3cret@buwebdev-cluster-1.078ar.mongodb.net/bcrs?retryWrites=true&w=majority"; // correct string
-  //"mongodb+srv://bcrsuser:s3cret@cluster0.ug54bka.mongodb.net/bcrs?retryWrites=true&w=majority"  // Will's db string for testing
+//"mongodb+srv://bcrsuser:s3cret@cluster0.ug54bka.mongodb.net/bcrs?retryWrites=true&w=majority"  // Will's db string for testing
 
-
-  /**
+/**
  * Database connection.
  */
-mongoose.set('strictQuery', false); // set strictQuery to false for mongoose 7
+mongoose.set("strictQuery", false); // set strictQuery to false for mongoose 7
 mongoose
   .connect(CONN)
   .then(() => {
@@ -56,6 +55,9 @@ const options = {
 const openapiSpecification = swaggerJSdoc(options);
 app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(openapiSpecification));
 
+/**
+ * Routes
+ */
 app.use("/api/users", UserAPI);
 app.use("/api/security-questions", SecurityQuestionAPI);
 
