@@ -127,23 +127,26 @@ router.post("/", async (req, res) => {
  */
 router.get("/", async (req, res) => {
   try {
-    SecurityQuestion.find({}, function (err, questions) {
-      /**
-       * handle mongo err for the query
-       */
-      if (err) {
-        console.log(err);
-        res.status(501).send({
-          err: "MongoDB server error: " + err.message,
-        });
-      } else {
+    SecurityQuestion.find({})
+      .where("isDisabled")
+      .equals(false)
+      .exec(function (err, questions) {
         /**
-         * successful get, list of questions
+         * handle mongo err for the query
          */
-        console.log(questions);
-        res.json(questions);
-      }
-    });
+        if (err) {
+          console.log(err);
+          res.status(501).send({
+            err: "MongoDB server error: " + err.message,
+          });
+        } else {
+          /**
+           * successful get, list of questions
+           */
+          console.log(questions);
+          res.json(questions);
+        }
+      });
   } catch (error) {
     /**
      * Catch errors that might happen with our server
@@ -352,4 +355,5 @@ router.delete("/:id", async (req, res) => {
     });
   }
 });
+
 module.exports = router;
