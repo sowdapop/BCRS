@@ -8,7 +8,7 @@
 
 const express = require("express");
 const router = express.Router();
-const bcrypt = require('bcryptjs');
+const bcrypt = require("bcryptjs");
 
 const User = require("../models/user");
 
@@ -59,20 +59,24 @@ router.get("/", async (req, res) => {
      */
     console.log(error);
     res.status(500).send({
-      'err' : "Internal server error: " + error.message,
+      err: "Internal server error: " + error.message,
     });
   }
 });
 
 /**
- * findAll
+ * findById
  * @openapi
- * /api/users/:userId:
+ * /api/users/{id}:
  *   get:
  *     tags:
  *       - Users
  *     description: API for finding user by ID.
  *     summary: Finds and returns user by ID
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         description: id of user document
  *     responses:
  *       '200':
  *         description: List of user docs
@@ -81,35 +85,31 @@ router.get("/", async (req, res) => {
  *       '501':
  *         description: MongoDB Exception
  */
-
-router.get('/:userId', async (req, res) => {
-  try
-    {
-      //Find the user information for a given user ID
-      User.findOne({'userId': req.params.userId}, function(err, user) {
-        //If there is a database error, return the 501 error message
-        if (err)  
-        {
-          console.log(err);
-            res.status(501).send({
-              'err': 'MongoDB Server Error: ' + err.message
-          })
-          //If there is no error, return the information for the user ID
-        } else {
-          console.log(user);
-          //Returns data as JSON
-          res.json(user);
-        }
-      })
-      //If there are server errors, return the 500 error message
-    } catch (error) 
-      {
-        console.log(error);
-          res.status(500).send({
-            'err': 'Internal Server Error: ' + error.message
-      })
-    }
-})
+router.get("/:id", async (req, res) => {
+  try {
+    //Find the user information for a given user ID
+    User.findOne({ _id: req.params.id }, function (err, user) {
+      //If there is a database error, return the 501 error message
+      if (err) {
+        console.log(err);
+        res.status(501).send({
+          err: "MongoDB Server Error: " + err.message,
+        });
+        //If there is no error, return the information for the user ID
+      } else {
+        console.log(user);
+        //Returns data as JSON
+        res.json(user);
+      }
+    });
+    //If there are server errors, return the 500 error message
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      err: "Internal Server Error: " + error.message,
+    });
+  }
+});
 
 /**
  * createUser
@@ -148,7 +148,7 @@ router.get('/:userId', async (req, res) => {
  *                type: string
  *              address:
  *                type: string
- *              securityQuestions: 
+ *              securityQuestions:
  *                type: array
  *                items:
  *                  type: object
@@ -179,22 +179,22 @@ router.post("/", async (req, res) => {
       phoneNumber: req.body.phoneNumber,
       emailAddress: req.body.emailAddress,
       address: req.body.address,
-      securityQuestions: req.body.securityQuestions
+      securityQuestions: req.body.securityQuestions,
     };
 
     // create new user in database using newUser object
-    User.create(newUser, function(err, user) {
-      if(err) {
+    User.create(newUser, function (err, user) {
+      if (err) {
         res.status(501).send({
-            "message": `MongoDB Exception: ${err}`
+          message: `MongoDB Exception: ${err}`,
         });
-    } else {
-      res.json(user);
-    }
-    })
+      } else {
+        res.json(user);
+      }
+    });
   } catch (error) {
     res.status(500).send({
-      'err': 'Internal Server Error: ' + error.message
+      err: "Internal Server Error: " + error.message,
     });
   }
 });
@@ -241,7 +241,7 @@ router.post("/", async (req, res) => {
  *                type: string
  *              address:
  *                type: string
- *              securityQuestions: 
+ *              securityQuestions:
  *                type: array
  *                items:
  *                  type: object
@@ -259,20 +259,23 @@ router.post("/", async (req, res) => {
  *        description: MongoDB Exception
  *
  */
-router.put('/:id', async(req, res) => {
+router.put("/:id", async (req, res) => {
   // get user by id, update fields using request body
   try {
-    User.findOne({'_id': req.params.id}, function(err, user) {
-      if(err) {
+    User.findOne({ _id: req.params.id }, function (err, user) {
+      if (err) {
         console.log(err);
         res.status(501).send({
-          "message": `MongoDB Exception: ${err}`
-        })
+          message: `MongoDB Exception: ${err}`,
+        });
       } else {
-        if(user) {
-          if(req.body.password) {
-            const hashedPassword = bcrypt.hashSync(req.body.password, saltRounds);
-            user.set({password: hashedPassword});
+        if (user) {
+          if (req.body.password) {
+            const hashedPassword = bcrypt.hashSync(
+              req.body.password,
+              saltRounds
+            );
+            user.set({ password: hashedPassword });
           }
           user.set({
             userName: req.body.userName,
@@ -282,32 +285,31 @@ router.put('/:id', async(req, res) => {
             emailAddress: req.body.emailAddress,
             address: req.body.address,
             securityQuestions: req.body.securityQuestions,
-            dateModified: Date.now()
-          })
-          user.save(function(err, updatedUser) {
-            if(err) {
+            dateModified: Date.now(),
+          });
+          user.save(function (err, updatedUser) {
+            if (err) {
               console.log(err);
               res.status(501).send({
-                "message": `MongoDB Exception: ${err}`
-              })
+                message: `MongoDB Exception: ${err}`,
+              });
             } else {
               res.json(updatedUser);
             }
-          })
+          });
         } else {
           res.status(401).send({
-            'message': 'ID: ' + req.params.id + ' does not exist'
+            message: "ID: " + req.params.id + " does not exist",
           });
         }
-
       }
-    })
+    });
   } catch (error) {
     res.status(500).send({
-      'err': 'Internal Server Error: ' + error.message
+      err: "Internal Server Error: " + error.message,
     });
   }
-})
+});
 
 /**
  * deleteUser
@@ -333,43 +335,42 @@ router.put('/:id', async(req, res) => {
  *        description: MongoDB Exception
  *
  */
-router.delete('/:id', async(req, res) => {
+router.delete("/:id", async (req, res) => {
   try {
     // finds user by id, then sets "isDisabled" to true
-    User.findOne({'_id': req.params.id}, function(err, user) {
-      if(err) {
+    User.findOne({ _id: req.params.id }, function (err, user) {
+      if (err) {
         console.log(err);
         res.status(501).send({
-          "message": `MongoDB Exception: ${err}`
-        })
+          message: `MongoDB Exception: ${err}`,
+        });
       } else {
-        if(user) {
+        if (user) {
           user.set({
-            isDisabled: true
-          })
-          user.save(function(err, updatedUser) {
-            if(err) {
+            isDisabled: true,
+          });
+          user.save(function (err, updatedUser) {
+            if (err) {
               console.log(err);
               res.status(501).send({
-                "message": `MongoDB Exception: ${err}`
-              })
+                message: `MongoDB Exception: ${err}`,
+              });
             } else {
               res.json(updatedUser);
             }
-          })
+          });
         } else {
           res.status(401).send({
-            'message': 'ID: ' + req.params.id + ' does not exist'
+            message: "ID: " + req.params.id + " does not exist",
           });
         }
-
       }
-    })
+    });
   } catch (error) {
     res.status(500).send({
-      'err': 'Internal Server Error: ' + error.message
+      err: "Internal Server Error: " + error.message,
     });
   }
-})
+});
 
 module.exports = router;
