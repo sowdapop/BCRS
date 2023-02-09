@@ -26,9 +26,9 @@ const SecurityQuestion = require("../models/security-question");
  *         application/json:
  *           schema:
  *             required:
- *               - questionText
+ *               - text
  *             properties:
- *               questionText:
+ *               text:
  *                 type: string
  *               isDisabled:
  *                 type: boolean
@@ -46,57 +46,48 @@ const SecurityQuestion = require("../models/security-question");
 router.post("/", async (req, res) => {
   try {
     /**
-     * variable assignment for new questions
-     */
-    let questionText = req.body.questionText;
-    let isDisabled = false;
-
-    /**
      * build a new question object with req.body values
      */
     const newSecurityQuestion = {
-      questionText: questionText,
-      isDisabled: isDisabled,
+      text: req.body.text,
+      isDisabled: false,
     };
 
     /**
      * query the sec question collection to see if current question exists
      */
-    SecurityQuestion.findOne(
-      { questionText: questionText },
-      function (err, question) {
-        if (!question) {
-          SecurityQuestion.create(
-            newSecurityQuestion,
-            function (err, newQuestion) {
+    SecurityQuestion.findOne({ text: req.body.text }, function (err, question) {
+      if (!question) {
+        SecurityQuestion.create(
+          newSecurityQuestion,
+          function (err, newQuestion) {
+            /**
+             * handle mongo err while create question
+             */
+            if (err) {
+              console.log(err);
+              res.status(501).send({
+                err: "MongoDB server error: " + err.message,
+              });
+            } else {
               /**
-               * handle mongo err while create question
+               * successful creation
                */
-              if (err) {
-                console.log(err);
-                res.status(501).send({
-                  err: "MongoDB server error: " + err.message,
-                });
-              } else {
-                /**
-                 * successful creation
-                 */
-                console.log(newQuestion);
-                res.json(newQuestion);
-              }
+              console.log(newQuestion);
+              res.json(newQuestion);
             }
-          );
-        } else {
-          /**
-           * if security question already exists
-           */
-          console.log("Security Question already exists!");
-          res.status(401).send({
-            err: "Security Question already exists!",
-          });
-        }
+          }
+        );
+      } else {
+        /**
+         * if security question already exists
+         */
+        console.log("Security Question already exists!");
+        res.status(401).send({
+          err: "Security Question already exists!",
+        });
       }
-    );
+    });
   } catch (error) {
     /**
      * Catch errors that might happen with our server
@@ -254,7 +245,7 @@ router.put("/:id", async (req, res) => {
       } else {
         if (question) {
           question.set({
-            questionText: req.body.questionText,
+            text: req.body.text,
           });
           question.save(function (err, updatedQuestion) {
             if (err) {
