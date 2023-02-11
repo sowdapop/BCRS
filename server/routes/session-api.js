@@ -11,8 +11,7 @@ const User = require("../models/user");
 const bcrypt = require("bcryptjs");
 const BaseResponse = require("../models/base-response");
 const ErrorResponse = require("../models/error-response");
-const { async } = require("rxjs");
-const { model } = require("mongoose");
+
 
 //defines router
 const router = express.Router();
