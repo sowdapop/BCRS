@@ -1,3 +1,10 @@
+/**
+ * Title:  Bob's Computer Repair Shop
+ * Authors: Danial Purselley, William Watlington, Kayla McDanel
+ * Date: 11 Feb 2023
+ * Description: A web application for a computer repair shop
+ */
+
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -11,6 +18,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -26,7 +34,9 @@ import { MatIconModule } from '@angular/material/icon';
     FlexLayoutModule,
     MatToolbarModule,
     MatButtonModule,
-    MatIconModule
+    MatIconModule,
+    HttpClient,
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

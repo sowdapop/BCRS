@@ -1,0 +1,29 @@
+{
+    "user": [
+        {
+            "id": "",
+            "firstName": "Bob",
+            "lastName": "Smith",
+            "role": "admin",
+            "security_questions": [
+                {
+                    "questionText": "What is your favorite color?",
+                    "answerText": "Green"
+                },
+                {
+                    "questionText": "What was your first car?",
+                    "answerText": "Honda"
+                },
+                {
+                    "questionText": "What was the name of your first pet?",
+                    "answerText": "Pongo"
+                }
+            ],
+            "invoices": [
+                {
+                    "001": "$50.00"
+                }
+            ]
+        }
+    ]
+}
