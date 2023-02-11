@@ -94,7 +94,8 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "src/styles.css",
+              "https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0"
             ],
             "scripts": []
           }
@@ -103,6 +104,9 @@
     }
   },
   "cli": {
-    "analytics": false
+    "analytics": false,
+    "cache": {
+      "enabled": false
+    }
   }
 }
