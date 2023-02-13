@@ -219,13 +219,10 @@ router.get("/:id", async (req, res) => {
  *         application/json:
  *           schema:
  *             required:
- *               - questionText
+ *               - text
  *             properties:
- *               questionText:
+ *               text:
  *                 type: string
- *               isDisabled:
- *                 type: boolean
- *                 default: false
  *     responses:
  *       '200':
  *         description: Question updated

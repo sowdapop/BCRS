@@ -33,6 +33,7 @@ import { TableModule } from "primeng/table";
 import { ButtonModule } from "primeng/button";
 import { UserDetailsComponent } from './pages/user-details/user-details.component';
 import { UserCreateComponent } from './pages/user-create/user-create.component';
+import { SecurityQuestionsComponent } from './pages/security-questions/security-questions.component';
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import { UserCreateComponent } from './pages/user-create/user-create.component';
     LoginComponent,
     UserDetailsComponent,
     UserCreateComponent,
+    SecurityQuestionsComponent,
   ],
   imports: [
     BrowserModule,

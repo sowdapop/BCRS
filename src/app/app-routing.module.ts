@@ -1,3 +1,8 @@
+/* 
+Title: app-routing.module.ts
+Author: William Watlington, Danial Purselley, Kayla McDanel 
+*/
+
 import { LoginComponent } from './pages/login/login.component';
 import { AuthLayoutComponent } from './shared/auth-layout/auth-layout.component';
 import { NgModule } from '@angular/core';
@@ -5,6 +10,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { BaseLayoutComponent } from "./shared/base-layout/base-layout.component";
 import { HomeComponent } from "./pages/home/home.component";
 import { AuthGuard } from './shared/auth.guard';
+import { UserCreateComponent } from './pages/user-create/user-create.component';
+import { SecurityQuestionsComponent } from './pages/security-questions/security-questions.component';
 
 const routes: Routes = [
   {
@@ -14,9 +21,13 @@ const routes: Routes = [
       {
         path: '',
         component: HomeComponent
+      },
+      {
+        path: 'sq',
+        component: SecurityQuestionsComponent
       }
-    ],
-    canActivate: [AuthGuard]
+    ]
+    //canActivate: [AuthGuard]
   },
   {
     path: 'session',
@@ -25,6 +36,10 @@ const routes: Routes = [
       {
         path: 'login',
         component: LoginComponent
+      },
+      {
+        path: 'register',
+        component: UserCreateComponent
       }
     ]
   }
