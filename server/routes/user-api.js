@@ -36,23 +36,26 @@ router.get("/", async (req, res) => {
     /**
      * Query MongoDB for list of all users
      */
-    User.find({}, function (err, user) {
-      /**
-       * If there is an error with MongoDB
-       */
-      if (err) {
-        console.log(err);
-        res.status(501).send({
-          err: "MongoDB server error: " + err.message,
-        });
-      } else {
+    User.find({})
+      .where("isDisabled")
+      .equals(false)
+      .exec(function (err, user) {
         /**
-         * Successfully return all users
+         * If there is an error with MongoDB
          */
-        res.json(user);
-        console.log(user);
-      }
-    });
+        if (err) {
+          console.log(err);
+          res.status(501).send({
+            err: "MongoDB server error: " + err.message,
+          });
+        } else {
+          /**
+           * Successfully return all users
+           */
+          res.json(user);
+          console.log(user);
+        }
+      });
   } catch (error) {
     /**
      * Catch errors that might happen with our server
@@ -155,7 +158,7 @@ router.get("/:id", async (req, res) => {
  *                  properties:
  *                    questionText:
  *                      type: string
- *                    questionAnswer:
+ *                    answerText:
  *                      type: string
  *    responses:
  *      '200':
