@@ -9,11 +9,11 @@
 
     <p-messages [(value)]="errorMessages" [enableService]="false"></p-messages>
 
-    //User detail form begins
+    <!--User detail form begins-->
     <form [formGroup]="form" (ngSubmit)="saveUser()" (keydown.enter)="$event.preventDefault()" style="width: 50%; margin: 0 auto;">
         <mat-card-content>
 
-            //User first name input & error message
+            <!--User first name input & error message-->
             <div fxLayout="column" fxLayoutGap="10px">
                 <mat-form-field appearance="fill">
                     <mat-label>First Name</mat-label>
@@ -24,7 +24,7 @@
                     </mat-error>
                 </mat-form-field>
 
-            //User last name input & error message
+            <!--User last name input & error message-->
             <mat-form-field appearance="fill">
                 <mat-label>Last Name</mat-label>
                 <input type="text" matInput formControlName="lastName" required />
@@ -34,7 +34,7 @@
                 </mat-error>
             </mat-form-field>
 
-            //User phone number input & error message
+            <!--User phone number input & error message-->
             <mat-form-field appearance="fill">
                 <mat-label>Phone number</mat-label>
                 <input type="text" matInput formControlName="phoneNumber" required />
@@ -44,7 +44,7 @@
                 </mat-error>
             </mat-form-field>
 
-            //User email input & error message
+            <!--User email input & error message-->
             <mat-form-field appearance="fill">
                 <mat-label>Email address</mat-label>
                 <input type="text" matInput formControlName="email" required />
@@ -58,7 +58,7 @@
                 </mat-error>
             </mat-form-field>
 
-            //User address input & error message
+            <!--User address input & error message-->
             <mat-form-field appearance="fill">
                 <textarea matInput required formControlName="address"
                 placeholder="123 First Street City, State Zip">
@@ -72,7 +72,7 @@
         </mat-card-content>
 
         <br />
-        //Buttons to cancel or submit
+        <!--Buttons to cancel or submit-->
         <mat-card-actions align="end">
             <button mat-raised-button (click)="cancel()">Cancel</button>
             <button mat-raised-button [disabled]="!form.valid">Submit</button>
