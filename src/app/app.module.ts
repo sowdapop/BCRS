@@ -31,6 +31,8 @@ import { MessageModule } from "primeng/message";
 import { MessagesModule } from "primeng/messages";
 import { TableModule } from "primeng/table";
 import { ButtonModule } from "primeng/button";
+import { UserDetailsComponent } from './pages/user-details/user-details.component';
+import { UserCreateComponent } from './pages/user-create/user-create.component';
 
 @NgModule({
   declarations: [
@@ -39,6 +41,8 @@ import { ButtonModule } from "primeng/button";
     AuthLayoutComponent,
     BaseLayoutComponent,
     LoginComponent,
+    UserDetailsComponent,
+    UserCreateComponent,
   ],
   imports: [
     BrowserModule,

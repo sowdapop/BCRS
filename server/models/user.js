@@ -32,4 +32,4 @@ let userSchema = new Schema(
   { collection: "users" } // write documents to existing collection
 );
 
-module.exports = mongoose.model("Users", userSchema);
+module.exports = mongoose.model("User", userSchema);
