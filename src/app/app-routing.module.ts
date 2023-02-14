@@ -1,4 +1,3 @@
-import { Component } from "@angular/core";
 /* 
 Title: app-routing.module.ts
 Author: William Watlington, Danial Purselley, Kayla McDanel 
