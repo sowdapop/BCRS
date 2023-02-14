@@ -1,29 +1,31 @@
 {
-    "user": [
-        {
-            "id": "",
-            "firstName": "Bob",
-            "lastName": "Smith",
-            "role": "admin",
-            "security_questions": [
-                {
-                    "questionText": "What is your favorite color?",
-                    "answerText": "Green"
-                },
-                {
-                    "questionText": "What was your first car?",
-                    "answerText": "Honda"
-                },
-                {
-                    "questionText": "What was the name of your first pet?",
-                    "answerText": "Pongo"
-                }
-            ],
-            "invoices": [
-                {
-                    "001": "$50.00"
-                }
-            ]
-        }
-    ]
+  "userName": "test2",
+  "password": "test2test",
+  "firstName": "testName",
+  "lastName": "testLast",
+  "phoneNumber": "1234567890",
+  "emailAddress": "email",
+  "address": "address",
+  "role": {
+    "text": "standard",
+    "_id": "63eae8d196a6eeb99f9d0a3f"
+  },
+  "selectedSecurityQuestions": [
+    {
+      "questionText": "question",
+      "answerText": "answer",
+      "_id": "63eae8d196a6eeb99f9d0a40"
+    }
+  ],
+  "invoices": [
+    {
+      "textItem": "Repair",
+      "itemCost": "$45.00"
+    }
+  ],
+  "dateCreated": "2023-02-14T00:10:42.195Z",
+  "dateModified": "2023-02-14T00:10:42.195Z",
+  "isDisabled": false,
+  "_id": "63eae8d196a6eeb99f9d0a3e",
+  "__v": 0
 }
