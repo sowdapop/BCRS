@@ -6,19 +6,21 @@
             <div class="question">
                 {{item.text}}
                 <button type="button" class="material-symbols-outlined">edit</button>
-                <button type="button" class="material-symbols-outlined" (click)="showDeleteModal(item._id)">delete</button>
+                <button type="button" class="material-symbols-outlined" (click)="showDeleteModal(item)">delete</button>
             </div>
         </li>
     </ul>
 </div>
 
-<!-- <div id="delete-modal-bg">
-    <div id="delete-modal" class="glow-border">
-        <h3>Confirm Deletion</h3>
-        <p>delete security question: "{{currentQuestion.text}}"?</p>
-        <div class="modal-button-container">
-            <button type="button" class="modal-button" (click)="deleteQuestion('')">Delete</button>
-            <button type="button" class="modal-button">Cancel</button>
+<div id="modal-bg">
+    <div id="modal" class="glow-border">
+        <div id="delete-modal-content">
+            <h3>Confirm Deletion</h3>
+            <p>delete security question: "{{currentQuestion.text}}"?</p>
+            <div class="modal-button-container">
+                <button type="button" class="modal-button" (click)="deleteQuestion(currentQuestion._id)">Delete</button>
+                <button type="button" class="modal-button" (click)="closeDeleteModal()">Cancel</button>
+            </div>
         </div>
     </div>
-</div> -->
+</div>

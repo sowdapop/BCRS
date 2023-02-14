@@ -22,6 +22,7 @@ export class SecurityQuestionsComponent implements OnInit {
     this.questions = [];
     this.currentQuestion = {_id: "", text: "", isDisabled: false};
 
+
     this.questionService.findAllQuestions().subscribe({
       next: (res: any) => {
         this.questions = res;
@@ -40,12 +41,34 @@ export class SecurityQuestionsComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  showDeleteModal(id: string) {
-
+  showDeleteModal(question: SecurityQuestion) {
+    this.currentQuestion = question;
+    const deleteModal = document.getElementById("modal-bg");
+    if(deleteModal) {
+      deleteModal.style.visibility = "visible";
+    }
   }
 
   deleteQuestion(id: string) {
+    this.closeDeleteModal();
+    this.questionService.deleteQuestion(id).subscribe({
+      next: (res) => {
 
+      },
+      error: (e) => {
+        console.log(e);
+      },
+      complete: () => {
+        location.reload();
+      }
+    });
+  }
+
+  closeDeleteModal() {
+    const deleteModal = document.getElementById("modal-bg");
+    if(deleteModal) {
+      deleteModal.style.visibility = "hidden";
+    }
   }
 
 }

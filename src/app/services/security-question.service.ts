@@ -18,12 +18,12 @@ export class SecurityQuestionService {
   }
 
   updateQuestion(id: string, text: string) {
-    return this.http.put('/api/security-questions' + id, {
+    return this.http.put('/api/security-questions/' + id, {
       text: text
     })
   }
 
   deleteQuestion(id: string) {
-    return this.http.delete('/api/security-questions' + id);
+    return this.http.delete('/api/security-questions/' + id);
   }
 }
