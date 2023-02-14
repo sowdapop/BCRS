@@ -16,6 +16,7 @@ import { ConfirmationService, ConfirmEventType } from "primeng/api";
   selector: "app-user-list",
   templateUrl: "./user-list.component.html",
   styleUrls: ["./user-list.component.css"],
+  providers: [ConfirmationService],
 })
 export class UserListComponent implements OnInit {
   //Define user variable
@@ -27,7 +28,9 @@ export class UserListComponent implements OnInit {
   ) {
     this.userService.findAllUsers().subscribe({
       next: (res) => {
-        this.users = res.data;
+        console.log(res);
+        this.users = res;
+        console.log(this.users);
       },
       error: (e) => {
         console.log(e);
