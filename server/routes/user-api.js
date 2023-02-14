@@ -151,7 +151,13 @@ router.get("/:id", async (req, res) => {
  *                type: string
  *              address:
  *                type: string
- *              securityQuestions:
+ *              role:
+ *                type: object
+ *                properties:
+ *                  text:
+ *                    type: string
+ *                    default: "standard"
+ *              selectedSecurityQuestions:
  *                type: array
  *                items:
  *                  type: object
@@ -182,7 +188,8 @@ router.post("/", async (req, res) => {
       phoneNumber: req.body.phoneNumber,
       emailAddress: req.body.emailAddress,
       address: req.body.address,
-      securityQuestions: req.body.securityQuestions,
+      role: req.body.role,
+      selectedSecurityQuestions: req.body.selectedSecurityQuestions,
     };
 
     // create new user in database using newUser object

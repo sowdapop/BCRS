@@ -9,11 +9,11 @@
 
     <p-messages [(value)]="errorMessages" [enableService]="false"></p-messages>
 
-    //Create user form begins
+    <!--Create user form begins-->
     <form [formGroup]="form" (ngSubmit)="createUser()" (keydown.enter)="$event.preventDefault()" style="width: 50%; margin: 0 auto;">
         <mat-card-content>
 
-            //Username input & error message
+            <!--Username input & error message-->
             <div fxLayout="column" fxLayoutGap="10px">
                 <mat-form-field appearance="fill">
                     <mat-label>Username</mat-label>
@@ -24,7 +24,7 @@
                     </mat-error>
                 </mat-form-field>
 
-            //User password input & error message
+            <!--User password input & error message-->
             <mat-form-field appearance="fill">
                 <mat-label>Password</mat-label>
                 <input type="password" matInput formControlName="password" required />
@@ -38,7 +38,7 @@
                 </mat-error>
             </mat-form-field>
 
-                        //User first name input & error message
+                        <!--User first name input & error message-->
                         <div fxLayout="column" fxLayoutGap="10px">
                             <mat-form-field appearance="fill">
                                 <mat-label>First Name</mat-label>
@@ -49,7 +49,7 @@
                                 </mat-error>
                             </mat-form-field>
             
-                        //User last name input & error message
+                        <!--User last name input & error message-->
                         <mat-form-field appearance="fill">
                             <mat-label>Last Name</mat-label>
                             <input type="text" matInput formControlName="lastName" required />
@@ -59,7 +59,7 @@
                             </mat-error>
                         </mat-form-field>
             
-                        //User phone number input & error message
+                        <!--User phone number input & error message-->
                         <mat-form-field appearance="fill">
                             <mat-label>Phone number</mat-label>
                             <input type="text" matInput formControlName="phoneNumber" required />
@@ -69,7 +69,7 @@
                             </mat-error>
                         </mat-form-field>
             
-                        //User email input & error message
+                        <!--User email input & error message-->
                         <mat-form-field appearance="fill">
                             <mat-label>Email address</mat-label>
                             <input type="text" matInput formControlName="email" required />
@@ -83,7 +83,7 @@
                             </mat-error>
                         </mat-form-field>
             
-                        //User address input & error message
+                        <!--User address input & error message-->
                         <mat-form-field appearance="fill">
                             <textarea matInput required formControlName="address"
                             placeholder="123 First Street City, State Zip">
@@ -97,7 +97,7 @@
             
 
         <br />
-        //Buttons to cancel or submit
+        <!--Buttons to cancel or submit-->
         <mat-card-actions align="end">
             <button mat-raised-button (click)="cancel()">Cancel</button>
             <button mat-raised-button [disabled]="!form.valid">Submit</button>

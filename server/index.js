@@ -8,6 +8,7 @@ const swaggerUI = require("swagger-ui-express");
 const swaggerJSdoc = require("swagger-jsdoc");
 const UserAPI = require("./routes/user-api");
 const SecurityQuestionAPI = require("./routes/security-question-api");
+const SessionAPI = require("./routes/session-api");
 
 const app = express(); // Express variable.
 
@@ -60,6 +61,7 @@ app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(openapiSpecification));
  */
 app.use("/api/users", UserAPI);
 app.use("/api/security-questions", SecurityQuestionAPI);
+app.use("/api/session", SessionAPI);
 
 // Wire-up the Express server.
 app.listen(PORT, () => {

@@ -23,7 +23,7 @@ let userSchema = new Schema(
     phoneNumber: { type: String },
     emailAddress: { type: String },
     address: { type: String },
-    userRole: UserRoleSchema,
+    role: UserRoleSchema,
     selectedSecurityQuestions: [SelectedSecurityQuestionSchema],
     dateCreated: { type: Date, default: Date.now() },
     dateModified: { type: Date, default: Date.now() },
