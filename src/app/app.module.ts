@@ -34,6 +34,7 @@ import { ButtonModule } from "primeng/button";
 import { UserDetailsComponent } from './pages/user-details/user-details.component';
 import { UserCreateComponent } from './pages/user-create/user-create.component';
 import { SecurityQuestionsComponent } from './pages/security-questions/security-questions.component';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 @NgModule({
   declarations: [
@@ -67,6 +68,7 @@ import { SecurityQuestionsComponent } from './pages/security-questions/security-
     MessagesModule,
     TableModule,
     ButtonModule,
+    ConfirmDialogModule
   ],
   providers: [],
   bootstrap: [AppComponent],
