@@ -14,7 +14,7 @@ export class SecurityQuestionService {
   }
 
   createQuestion(text: string) {
-    return this.http.post('/api/security-questions', { text: text });
+    return this.http.post('/api/security-questions/', { text: text });
   }
 
   updateQuestion(id: string, text: string) {
