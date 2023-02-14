@@ -16,20 +16,36 @@ import { SecurityQuestionService } from 'src/app/services/security-question.serv
 export class SecurityQuestionsComponent implements OnInit {
 
   questions: SecurityQuestion[];
+  currentQuestion: SecurityQuestion;
 
   constructor(private questionService: SecurityQuestionService) {
     this.questions = [];
+    this.currentQuestion = {_id: "", text: "", isDisabled: false};
 
     this.questionService.findAllQuestions().subscribe({
-      next: (res) => {
-
+      next: (res: any) => {
+        this.questions = res;
       },
+      error: (e) => {
+        console.log(e.message);
+      },
+      complete: () => {
+        console.log(this.questions)
+      }
 
     })
    }
 
 
   ngOnInit(): void {
+  }
+
+  showDeleteModal(id: string) {
+
+  }
+
+  deleteQuestion(id: string) {
+
   }
 
 }

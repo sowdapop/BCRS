@@ -1,0 +1,88 @@
+.container {
+    background-color: #fff;
+    color: #000;
+    width: 60%;
+    margin: 8rem auto; 
+    padding: 3rem 0;
+    min-height: 50vh;
+}
+
+.container ul {
+    width: 70%;
+    margin: 0 auto;
+}
+
+.container h1 {
+    font-size: 3rem;
+    font-family: "Oswald", sans-serif;
+    text-align: center;
+}
+
+.container h3 {
+    font-family: "Roboto", sans-serif;
+    font-size: 1.7rem;
+    text-align: center;
+    margin: 3rem;
+}
+
+.list-item {
+    list-style: none;
+    font-family: "Roboto", sans-serif;
+    font-size: 1.3rem;
+    width: 100%;
+    border-bottom: 1px solid #707070;
+    padding: 1rem;
+}
+
+.question button {
+    border: none;
+    background-color: #fff;
+    cursor: pointer;
+    float: right;
+    font-size: 1.8rem;
+}
+
+button:hover {
+    color: #F0C75E;
+}
+
+#delete-modal-bg {
+    background-color: #00000050;
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+}
+
+#delete-modal h3 {
+    font-family: "Oswald", sans-serif;
+    font-size: 1.7rem;
+    text-align: center;
+    margin: 3rem;
+}
+
+#delete-modal p {
+    text-align: center;
+    font-size: 1.3rem;
+}
+
+#delete-modal {
+    width: 40%;
+    min-height: 10rem;
+    background-color: #fff;
+    color: #000;
+    margin: 0 auto;
+    vertical-align: middle;
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.modal-button {
+    background-color: #F0C75E;
+    font-size: 1.3rem;
+    padding: .5rem 1rem;
+    border-radius: 40px;
+}
+

@@ -2,8 +2,23 @@
     <h1>Security Question Configuration</h1>
     <h3>Current Questions</h3>
     <ul>
-        <li *ngFor="let item of questions">
-            {{item.text}}
+        <li class="list-item" *ngFor="let item of questions">
+            <div class="question">
+                {{item.text}}
+                <button type="button" class="material-symbols-outlined">edit</button>
+                <button type="button" class="material-symbols-outlined" (click)="showDeleteModal(item._id)">delete</button>
+            </div>
         </li>
     </ul>
 </div>
+
+<!-- <div id="delete-modal-bg">
+    <div id="delete-modal" class="glow-border">
+        <h3>Confirm Deletion</h3>
+        <p>delete security question: "{{currentQuestion.text}}"?</p>
+        <div class="modal-button-container">
+            <button type="button" class="modal-button" (click)="deleteQuestion('')">Delete</button>
+            <button type="button" class="modal-button">Cancel</button>
+        </div>
+    </div>
+</div> -->
