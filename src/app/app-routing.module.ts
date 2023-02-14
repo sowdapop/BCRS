@@ -41,7 +41,7 @@ const routes: Routes = [
         component: UserCreateComponent,
       },
     ],
-    //canActivate: [AuthGuard]
+    canActivate: [AuthGuard]
   },
   {
     path: "session",
