@@ -1,3 +1,4 @@
+import { Component } from '@angular/core';
 /* 
 Title: app-routing.module.ts
 Author: William Watlington, Danial Purselley, Kayla McDanel 
@@ -12,6 +13,9 @@ import { HomeComponent } from "./pages/home/home.component";
 import { AuthGuard } from './shared/auth.guard';
 import { UserCreateComponent } from './pages/user-create/user-create.component';
 import { SecurityQuestionsComponent } from './pages/security-questions/security-questions.component';
+import { UserListComponent } from './pages/user-list/user-list.component';
+import { UserDetailsComponent } from './pages/user-details/user-details.component';
+
 
 const routes: Routes = [
   {
@@ -25,6 +29,14 @@ const routes: Routes = [
       {
         path: 'sq',
         component: SecurityQuestionsComponent
+      },
+      {
+        path:'users',
+        component: UserListComponent
+      },
+      {
+        path: 'users/:userId',
+        component: UserDetailsComponent
       }
     ]
     //canActivate: [AuthGuard]
