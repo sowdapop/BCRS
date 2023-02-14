@@ -1,64 +1,69 @@
-import { Component } from '@angular/core';
+import { Component } from "@angular/core";
 /* 
 Title: app-routing.module.ts
 Author: William Watlington, Danial Purselley, Kayla McDanel 
 */
 
-import { LoginComponent } from './pages/login/login.component';
-import { AuthLayoutComponent } from './shared/auth-layout/auth-layout.component';
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { LoginComponent } from "./pages/login/login.component";
+import { AuthLayoutComponent } from "./shared/auth-layout/auth-layout.component";
+import { NgModule } from "@angular/core";
+import { RouterModule, Routes } from "@angular/router";
 import { BaseLayoutComponent } from "./shared/base-layout/base-layout.component";
 import { HomeComponent } from "./pages/home/home.component";
-import { AuthGuard } from './shared/auth.guard';
-import { UserCreateComponent } from './pages/user-create/user-create.component';
-import { SecurityQuestionsComponent } from './pages/security-questions/security-questions.component';
-import { UserListComponent } from './pages/user-list/user-list.component';
-import { UserDetailsComponent } from './pages/user-details/user-details.component';
-
+import { AuthGuard } from "./shared/auth.guard";
+import { UserCreateComponent } from "./pages/user-create/user-create.component";
+import { SecurityQuestionsComponent } from "./pages/security-questions/security-questions.component";
+import { UserListComponent } from "./pages/user-list/user-list.component";
+import { UserDetailsComponent } from "./pages/user-details/user-details.component";
 
 const routes: Routes = [
   {
-    path: '',
+    path: "",
     component: BaseLayoutComponent,
     children: [
       {
-        path: '',
-        component: HomeComponent
+        path: "",
+        component: HomeComponent,
       },
       {
-        path: 'sq',
-        component: SecurityQuestionsComponent
+        path: "sq",
+        component: SecurityQuestionsComponent,
       },
       {
-        path:'users',
-        component: UserListComponent
+        path: "users",
+        component: UserListComponent,
       },
       {
-        path: 'users/:userId',
-        component: UserDetailsComponent
-      }
-    ]
+        path: "users/:userId",
+        component: UserDetailsComponent,
+      },
+      {
+        path: "users/create/new",
+        component: UserCreateComponent,
+      },
+    ],
     //canActivate: [AuthGuard]
   },
   {
-    path: 'session',
+    path: "session",
     component: AuthLayoutComponent,
     children: [
       {
-        path: 'login',
-        component: LoginComponent
+        path: "login",
+        component: LoginComponent,
       },
-      {
-        path: 'register',
-        component: UserCreateComponent
-      }
-    ]
-  }
+    ],
+  },
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, {useHash: true, enableTracing: false, scrollPositionRestoration: 'enabled'})],
-  exports: [RouterModule]
+  imports: [
+    RouterModule.forRoot(routes, {
+      useHash: true,
+      enableTracing: false,
+      scrollPositionRestoration: "enabled",
+    }),
+  ],
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

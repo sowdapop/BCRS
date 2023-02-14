@@ -31,10 +31,12 @@ import { MessageModule } from "primeng/message";
 import { MessagesModule } from "primeng/messages";
 import { TableModule } from "primeng/table";
 import { ButtonModule } from "primeng/button";
-import { UserDetailsComponent } from './pages/user-details/user-details.component';
-import { UserCreateComponent } from './pages/user-create/user-create.component';
-import { SecurityQuestionsComponent } from './pages/security-questions/security-questions.component';
-import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { UserDetailsComponent } from "./pages/user-details/user-details.component";
+import { UserCreateComponent } from "./pages/user-create/user-create.component";
+import { SecurityQuestionsComponent } from "./pages/security-questions/security-questions.component";
+import { ConfirmDialogModule } from "primeng/confirmdialog";
+import { ConfirmationService } from "primeng/api";
+import { UserListComponent } from "./pages/user-list/user-list.component";
 
 @NgModule({
   declarations: [
@@ -46,6 +48,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
     UserDetailsComponent,
     UserCreateComponent,
     SecurityQuestionsComponent,
+    UserListComponent,
   ],
   imports: [
     BrowserModule,
@@ -68,7 +71,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
     MessagesModule,
     TableModule,
     ButtonModule,
-    ConfirmDialogModule
+    ConfirmDialogModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
