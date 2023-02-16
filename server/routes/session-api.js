@@ -343,6 +343,43 @@ router.get("/verify/users/:userName", async (req, res) => {
 
 /**
  * verifySecurityQuestions
+ * @openapi
+ * /api/session/verify/users/{userName}/security-questions:
+ *   post:
+ *     tags:
+ *       - Session
+ *     description: API for verifying security questions
+ *     summary: check if a user has answered the security questions correctly
+ *     parameters:
+ *       - in: path
+ *         name: userName
+ *         schema:
+ *           type: string
+ *           description: userName to query
+ *     requestBody:
+ *       content:
+ *         application/json:
+ *           schema:
+ *             properties:
+ *               questionText1:
+ *                 type: string
+ *               answerText1:
+ *                 type: string
+ *               questionText2:
+ *                 type: string
+ *               answerText2:
+ *                 type: string
+ *               questionText3:
+ *                 type: string
+ *               answerText3:
+ *                 type: string
+ *     responses:
+ *       '200':
+ *         description:
+ *       '500':
+ *         description:
+ *       '501':
+ *         description:
  */
 router.post("/verify/users/:userName/security-questions", async (req, res) => {
   try {
@@ -367,7 +404,7 @@ router.post("/verify/users/:userName/security-questions", async (req, res) => {
         console.log(user);
         // set sec question variable to use in the input text fill
         const selectedSecurityQuestionOne = user.selectedSecurityQuestions.find(
-          (q) => q.questionText === req.body.questionText1
+          (q) => q.questionText == req.body.questionText1
         );
         const selectedSecurityQuestionTwo = user.selectedSecurityQuestions.find(
           (q2) => q2.questionText === req.body.questionText2
@@ -392,7 +429,7 @@ router.post("/verify/users/:userName/security-questions", async (req, res) => {
           );
           const validSecurityQuestionResponse = new BaseResponse(
             "200",
-            "success",
+            "User answered questions successfully",
             user
           );
           res.json(validSecurityQuestionResponse.toObject());
@@ -412,6 +449,31 @@ router.post("/verify/users/:userName/security-questions", async (req, res) => {
         }
       }
     });
+  } catch (error) {
+    /**
+     * handle an internal server error
+     */
+    console.log(error);
+    const findSelectedSecurityQuestionsCatchErrorResponse = new ErrorResponse(
+      "500",
+      "Internal server error",
+      error
+    );
+    res
+      .status(500)
+      .send(findSelectedSecurityQuestionsCatchErrorResponse.toObject());
+  }
+});
+
+/**
+ * resetPassword
+ *
+ */
+router.post("/users/:userName/reset-password", async (req, res) => {
+  try {
+    /**
+     * query the database
+     */
   } catch (error) {
     /**
      * handle an internal server error
