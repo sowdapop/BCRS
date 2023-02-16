@@ -11,10 +11,11 @@ const bcrypt = require("bcryptjs");
 const BaseResponse = require("../services/base-response");
 const ErrorResponse = require("../services/error-response");
 
+saltRounds = 10;
+
 //defines router
 const router = express.Router();
 
-//Swagger for user sign in
 /**
  * sessionLogin
  * @openapi
@@ -46,8 +47,6 @@ const router = express.Router();
  *       '501':
  *         description: MongoDB Exception
  */
-
-//user sign in
 router.post("/login", async (req, res) => {
   try {
     //find the username
@@ -100,6 +99,162 @@ router.post("/login", async (req, res) => {
       e.message
     );
     res.status(500).send(signinCatchErrorResponse.toObject());
+  }
+});
+
+/**
+ * registerUser
+ * @openapi
+ * /api/session/register:
+ *   post:
+ *     tags:
+ *       - Session
+ *     description: API for registering a new user
+ *     summary: register new user
+ *     requestBody:
+ *       content:
+ *         application/json:
+ *           schema:
+ *             required:
+ *               - userName
+ *               - password
+ *               - firstName
+ *               - lastName
+ *               - phoneNumber
+ *               - emailAddress
+ *               - address
+ *               - securityQuestions
+ *             properties:
+ *               userName:
+ *                 type: string
+ *               password:
+ *                 type: string
+ *               firstName:
+ *                 type: string
+ *               lastName:
+ *                 type: string
+ *               phoneNumber:
+ *                 type: number
+ *               emailAddress:
+ *                 type: string
+ *               address:
+ *                 type: string
+ *               role:
+ *                 type: object
+ *                 properties:
+ *                   text:
+ *                     type: string
+ *                     default: "standard"
+ *               selectedSecurityQuestions:
+ *                 type: array
+ *                 items:
+ *                   type: object
+ *                   properties:
+ *                     questionText:
+ *                       type: string
+ *                     answerText:
+ *                       type: string
+ *     responses:
+ *       '200':
+ *         description: User document
+ *       '500':
+ *         description: Server Exception
+ *       '501':
+ *         description: MongoDB Exception
+ */
+router.post("/register", async (req, res) => {
+  try {
+    /**
+     * query db for user to see if already exists
+     */
+    User.findOne({ userName: req.body.userName }, function (err, user) {
+      /**
+       * if there is a mongoDB error
+       */
+      if (err) {
+        console.log(err);
+        const findSelectedSecurityQuestionsMongodbErrorResponse =
+          new ErrorResponse("501", "MongoDB server error", err);
+        res
+          .status(501)
+          .send(findSelectedSecurityQuestionsMongodbErrorResponse.toObject());
+      } else {
+        /**
+         * if no user if found, ie: username doesn't exist create user
+         */
+        if (!user) {
+          // hash the password
+          let hashedPassword = bcrypt.hashSync(req.body.password, saltRounds);
+          // set the role to standard
+          standardRole = {
+            text: "standard",
+          };
+          // user object
+          let registeredUser = {
+            userName: req.body.userName,
+            password: hashedPassword,
+            firstName: req.body.firstName,
+            lastName: req.body.lastName,
+            phoneNumber: req.body.phoneNumber,
+            emailAddress: req.body.emailAddress,
+            address: req.body.address,
+            role: standardRole,
+            selectedSecurityQuestions: req.body.selectedSecurityQuestions,
+          };
+          // create the new user
+          User.create(registeredUser, function (err, newUser) {
+            /**
+             * if there is a mongoDB error
+             */
+            if (err) {
+              console.log(err);
+              const findSelectedSecurityQuestionsMongodbErrorResponse =
+                new ErrorResponse("501", "MongoDB server error", err);
+              res
+                .status(501)
+                .send(
+                  findSelectedSecurityQuestionsMongodbErrorResponse.toObject()
+                );
+            } else {
+              /**
+               * register new user success!!
+               */
+              console.log(newUser);
+              const registeredUserResponse = new BaseResponse(
+                "200",
+                "User registered",
+                newUser
+              );
+              res.json(registeredUserResponse.toObject());
+            }
+          });
+        } else {
+          /**
+           * userName already exists
+           */
+          console.log(`Username ${req.body.userName} already exists.`);
+          const userInUseError = new ErrorResponse(
+            "400",
+            "Username already in use",
+            req.body.userName
+          );
+          res.status(400).send(userInUseError.toObject());
+        }
+      }
+    });
+  } catch (error) {
+    /**
+     * handle an internal server error
+     */
+    console.log(error);
+    const findSelectedSecurityQuestionsCatchErrorResponse = new ErrorResponse(
+      "500",
+      "Internal server error",
+      error
+    );
+    res
+      .status(500)
+      .send(findSelectedSecurityQuestionsCatchErrorResponse.toObject());
   }
 });
 
