@@ -258,4 +258,87 @@ router.post("/register", async (req, res) => {
   }
 });
 
+/**
+ * verifyUser
+ * @openapi
+ * /api/session/verify/users/{userName}:
+ *   get:
+ *     tags:
+ *       - Session
+ *     description: API for verifying user exists
+ *     summary: verify user is in db
+ *     parameters:
+ *       - in: path
+ *         name: userName
+ *         schema:
+ *           type: string
+ *           description: userName to search
+ *     responses:
+ *       '200':
+ *         description: User exists
+ *       '500':
+ *         description: Server Exception
+ *       '501':
+ *         description: MongoDB Exception
+ */
+router.get("/verify/users/:userName", async (req, res) => {
+  try {
+    /**
+     * query db for the user
+     */
+    User.findOne({ userName: req.params.userName }, function (err, user) {
+      /**
+       * if there is a mongoDB error
+       */
+      if (err) {
+        console.log(err);
+        const findSelectedSecurityQuestionsMongodbErrorResponse =
+          new ErrorResponse("501", "MongoDB server error", err);
+        res
+          .status(501)
+          .send(findSelectedSecurityQuestionsMongodbErrorResponse.toObject());
+      } else {
+        /**
+         * no db issues, handle if user is found or not
+         */
+        if (user) {
+          /**
+           * user found
+           */
+          console.log(user);
+          const verifyUserResponse = new BaseResponse(
+            "200",
+            "Query successful",
+            user
+          );
+          res.json(verifyUserResponse.toObject());
+        } else {
+          /**
+           * user not found
+           */
+          const invalidUsernameResponse = new BaseResponse(
+            "400",
+            "Invalid username",
+            req.params.userName
+          );
+          res.status(400).send(invalidUsernameResponse.toObject());
+        }
+      }
+    });
+  } catch (error) {
+    /**
+     * handle an internal server error
+     */
+    console.log(error);
+    const findSelectedSecurityQuestionsCatchErrorResponse = new ErrorResponse(
+      "500",
+      "Internal server error",
+      error
+    );
+    res
+      .status(500)
+      .send(findSelectedSecurityQuestionsCatchErrorResponse.toObject());
+  }
+});
+
 module.exports = router;
