@@ -341,4 +341,91 @@ router.get("/verify/users/:userName", async (req, res) => {
   }
 });
 
+/**
+ * verifySecurityQuestions
+ */
+router.post("/verify/users/:userName/security-questions", async (req, res) => {
+  try {
+    /**
+     * query the DB for the user
+     */
+    User.findOne({ userName: req.params.userName }, function (err, user) {
+      if (err) {
+        /**
+         * if there is a db error
+         */
+        console.log(err);
+        const findSelectedSecurityQuestionsMongodbErrorResponse =
+          new ErrorResponse("501", "MongoDB server error", err);
+        res
+          .status(501)
+          .send(findSelectedSecurityQuestionsMongodbErrorResponse.toObject());
+      } else {
+        /**
+         * no db error, set the sec questions
+         */
+        console.log(user);
+        // set sec question variable to use in the input text fill
+        const selectedSecurityQuestionOne = user.selectedSecurityQuestions.find(
+          (q) => q.questionText === req.body.questionText1
+        );
+        const selectedSecurityQuestionTwo = user.selectedSecurityQuestions.find(
+          (q2) => q2.questionText === req.body.questionText2
+        );
+        const selectedSecurityQuestionThree =
+          user.selectedSecurityQuestions.find(
+            (q3) => q3.questionText === req.body.questionText3
+          );
+        // set the sec answers to verify that answers match
+        const isValidAnswerOne =
+          selectedSecurityQuestionOne.answerText === req.body.answerText1;
+        const isValidAnswerTwo =
+          selectedSecurityQuestionTwo.answerText === req.body.answerText2;
+        const isValidAnswerThree =
+          selectedSecurityQuestionThree.answerText === req.body.answerText3;
+        /**
+         * if all answers are valid
+         */
+        if (isValidAnswerOne && isValidAnswerTwo && isValidAnswerThree) {
+          console.log(
+            `User ${user.userName} answered their security questions correctly`
+          );
+          const validSecurityQuestionResponse = new BaseResponse(
+            "200",
+            "success",
+            user
+          );
+          res.json(validSecurityQuestionResponse.toObject());
+        } else {
+          /**
+           * handle if any answer is invalid
+           */
+          console.log(
+            `User ${user.userName} did not answer their security questions correctly`
+          );
+          const invalidSecurityQuestionResponse = new BaseResponse(
+            "200",
+            "error",
+            user
+          );
+          res.json(invalidSecurityQuestionResponse.toObject());
+        }
+      }
+    });
+  } catch (error) {
+    /**
+     * handle an internal server error
+     */
+    console.log(error);
+    const findSelectedSecurityQuestionsCatchErrorResponse = new ErrorResponse(
+      "500",
+      "Internal server error",
+      error
+    );
+    res
+      .status(500)
+      .send(findSelectedSecurityQuestionsCatchErrorResponse.toObject());
+  }
+});
+
 module.exports = router;
