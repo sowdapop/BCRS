@@ -467,13 +467,90 @@ router.post("/verify/users/:userName/security-questions", async (req, res) => {
 
 /**
  * resetPassword
- *
+ * @openapi
+ * /api/session/users/{userName}/reset-password:
+ *   post:
+ *     tags:
+ *       - Session
+ *     description: API for resetting a user's password
+ *     summary: reset a user password
+ *     parameters:
+ *       - in: path
+ *         name: userName
+ *         schema:
+ *           type: string
+ *           description: username to query
+ *     requestBody:
+ *       content:
+ *         application/json:
+ *           schema:
+ *             properties:
+ *               password:
+ *                 type: string
+ *     responses:
+ *       '200':
+ *         description: Password reset
+ *       '500':
+ *         description: Server exception
+ *       '501':
+ *         description: MongoDB exception
  */
 router.post("/users/:userName/reset-password", async (req, res) => {
   try {
     /**
      * query the database
      */
+    User.findOne({ userName: req.params.userName }, function (err, user) {
+      // set a password variable for later user
+      const password = req.body.password;
+      /**
+       * if there is a mongo db error during query
+       */
+      if (err) {
+        console.log(err);
+        const findSelectedSecurityQuestionsMongodbErrorResponse =
+          new ErrorResponse("501", "MongoDB server error", err);
+        res
+          .status(501)
+          .send(findSelectedSecurityQuestionsMongodbErrorResponse.toObject());
+      } else {
+        /**
+         * no query error, proceed
+         */
+        console.log(user);
+        // hash the password variable
+        const hashedPassword = bcrypt.hashSync(password, saltRounds);
+        // update user's password
+        user.set({ password: hashedPassword });
+        // save new user
+        user.save(function (err, updatedUser) {
+          /**
+           * if mongo db error during save
+           */
+          if (err) {
+            console.log(err);
+            const findSelectedSecurityQuestionsMongodbErrorResponse =
+              new ErrorResponse("501", "MongoDB server error", err);
+            res
+              .status(501)
+              .send(
+                findSelectedSecurityQuestionsMongodbErrorResponse.toObject()
+              );
+          } else {
+            /**
+             * successfully update user password
+             */
+            console.log(updatedUser);
+            const updatedPasswordResponse = new BaseResponse(
+              "200",
+              "Password updated!",
+              updatedUser
+            );
+            res.json(updatedPasswordResponse.toObject());
+          }
+        });
+      }
+    });
   } catch (error) {
     /**
      * handle an internal server error
