@@ -9,6 +9,8 @@
 const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcryptjs");
+const ErrorResponse = require("../services/error-response");
+const BaseResponse = require("../services/base-response");
 
 const User = require("../models/user");
 
@@ -380,6 +382,77 @@ router.delete("/:id", async (req, res) => {
     res.status(500).send({
       err: "Internal Server Error: " + error.message,
     });
+  }
+});
+
+/**
+ * findSelectedSecurityQuestions
+ * @openapi
+ * /api/users/{userName}/security-questions:
+ *   get:
+ *     tags:
+ *       - Users
+ *     description: API for returning a users selected security questions
+ *     summary: return security questions
+ *     parameters:
+ *       - in: path
+ *         name: userName
+ *         schema:
+ *           type: string
+ *           description: userName to search
+ *     responses:
+ *       '200':
+ *         description: User's security questions
+ *       '500':
+ *         description: Server Exception
+ *       '501':
+ *         description: MongoDB Exception
+ */
+router.get("/:userName/security-questions", async (req, res) => {
+  try {
+    /**
+     * query the db to find the user
+     */
+    User.findOne({ userName: req.params.userName }, function (err, user) {
+      /**
+       * if there is a mongo db error during query
+       */
+      if (err) {
+        console.log(err);
+        const findSelectedSecurityQuestionsMongodbErrorResponse =
+          new ErrorResponse("501", "MongoDB server error", err);
+        res
+          .status(501)
+          .send(findSelectedSecurityQuestionsMongodbErrorResponse.toObject());
+      } else {
+        /**
+         * user found
+         */
+        console.log(user);
+        /**
+         * set the response data to just be the selectedSecurityQuestions
+         */
+        const findSelectedSecurityQuestionsResponse = new BaseResponse(
+          "200",
+          "Query Successful",
+          user.selectedSecurityQuestions
+        );
+        res.json(findSelectedSecurityQuestionsResponse.toObject());
+      }
+    });
+  } catch (error) {
+    /**
+     * handle an internal server error
+     */
+    console.log(error);
+    const findSelectedSecurityQuestionsCatchErrorResponse = new ErrorResponse(
+      "500",
+      "Internal server error",
+      error
+    );
+    res
+      .status(500)
+      .send(findSelectedSecurityQuestionsCatchErrorResponse.toObject());
   }
 });
 
