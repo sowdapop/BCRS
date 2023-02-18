@@ -38,6 +38,7 @@ import { ConfirmDialogModule } from "primeng/confirmdialog";
 import { ConfirmationService } from "primeng/api";
 import { UserListComponent } from "./pages/user-list/user-list.component";
 import { ContactComponent } from './pages/contact/contact.component';
+import { VerifyUsernameFormComponent } from './shared/forms/verify-username-form/verify-username-form.component';
 
 @NgModule({
   declarations: [
@@ -51,6 +52,7 @@ import { ContactComponent } from './pages/contact/contact.component';
     SecurityQuestionsComponent,
     UserListComponent,
     ContactComponent,
+    VerifyUsernameFormComponent,
   ],
   imports: [
     BrowserModule,
