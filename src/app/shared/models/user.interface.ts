@@ -5,6 +5,8 @@
  * Description: A web application for a computer repair shop
  */
 
+import { SelectedSecurityQuestion } from "./selected-security-question";
+
 export interface User   {
     _id?: string;
     userName?: string;
@@ -14,5 +16,5 @@ export interface User   {
     phoneNumber: string;
     address: string;
     email: string;
-    selectedSecurityQuestions: string;
+    selectedSecurityQuestions: SelectedSecurityQuestion[];
 }

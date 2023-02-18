@@ -15,6 +15,7 @@ import { SecurityQuestionsComponent } from "./pages/security-questions/security-
 import { UserListComponent } from "./pages/user-list/user-list.component";
 import { UserDetailsComponent } from "./pages/user-details/user-details.component";
 import { ContactComponent } from "./pages/contact/contact.component";
+import { RegisterComponent } from "./pages/register/register.component";
 
 const routes: Routes = [
   {
@@ -56,6 +57,10 @@ const routes: Routes = [
         path: "login",
         component: LoginComponent,
       },
+      {
+        path: "register",
+        component: RegisterComponent
+      }
     ],
   },
 ];

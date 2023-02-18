@@ -38,6 +38,10 @@ import { ConfirmDialogModule } from "primeng/confirmdialog";
 import { ConfirmationService } from "primeng/api";
 import { UserListComponent } from "./pages/user-list/user-list.component";
 import { ContactComponent } from './pages/contact/contact.component';
+import { RegisterComponent } from './pages/register/register.component';
+import { MatListModule } from '@angular/material/list';
+import { MatStepperModule } from '@angular/material/stepper';
+import { MatSelectModule } from "@angular/material/select";
 
 @NgModule({
   declarations: [
@@ -51,6 +55,7 @@ import { ContactComponent } from './pages/contact/contact.component';
     SecurityQuestionsComponent,
     UserListComponent,
     ContactComponent,
+    RegisterComponent,
   ],
   imports: [
     BrowserModule,
@@ -74,6 +79,9 @@ import { ContactComponent } from './pages/contact/contact.component';
     TableModule,
     ButtonModule,
     ConfirmDialogModule,
+    MatListModule,
+    MatStepperModule,
+    MatSelectModule
   ],
   providers: [],
   bootstrap: [AppComponent],

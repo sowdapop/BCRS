@@ -1,0 +1,19 @@
+.comic-text {
+    font-family: 'Comic Sans MS', 'Comic Sans', cursive;
+}
+
+#large-text {
+    font-size: 48px;
+    font-weight: lighter;
+    letter-spacing: .2rem;
+}
+
+.title {
+    text-align: center;
+    font-weight: lighter;
+}
+
+.subtitle {
+    text-align: center;
+    font-size: 14px;
+}

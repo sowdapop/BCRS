@@ -9,7 +9,7 @@ export class SecurityQuestionService {
 
   constructor(private http: HttpClient) { }
 
-  findAllQuestions() {
+  findAllQuestions(): Observable<any> {
     return this.http.get('/api/security-questions');
   }
 
