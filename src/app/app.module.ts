@@ -42,6 +42,7 @@ import { RegisterComponent } from './pages/register/register.component';
 import { MatListModule } from '@angular/material/list';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatSelectModule } from "@angular/material/select";
+import { VerifyUsernameFormComponent } from './shared/forms/verify-username-form/verify-username-form.component';
 
 @NgModule({
   declarations: [
@@ -56,6 +57,7 @@ import { MatSelectModule } from "@angular/material/select";
     UserListComponent,
     ContactComponent,
     RegisterComponent,
+    VerifyUsernameFormComponent,
   ],
   imports: [
     BrowserModule,
