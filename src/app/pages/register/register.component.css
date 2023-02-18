@@ -1,5 +1,11 @@
-.comic-text {
-    font-family: 'Comic Sans MS', 'Comic Sans', cursive;
+.register-header {
+    background-color: #000;
+}
+
+.register-header img {
+    width: 20%;
+    display: block;
+    margin: 0 auto;
 }
 
 #large-text {
