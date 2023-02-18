@@ -52,7 +52,8 @@ errorMessages: Message[] = [];
       lastName: this.form.controls['lastName'].value,
       phoneNumber: this.form.controls['phoneNumber'].value,
       address: this.form.controls['address'].value,
-      email: this.form.controls['email'].value
+      email: this.form.controls['email'].value,
+      selectedSecurityQuestions: this.form.controls['selectedSecurityQuestions'].value
     };
 
     this.userService.createUser(newUser).subscribe({

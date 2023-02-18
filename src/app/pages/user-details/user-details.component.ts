@@ -71,6 +71,7 @@ export class UserDetailsComponent implements OnInit {
       phoneNumber: this.form.controls["phoneNumber"].value,
       email: this.form.controls["email"].value,
       address: this.form.controls["address"].value,
+      selectedSecurityQuestions: this.form.controls['selectedSecurityQuestions'].value
     };
 
     this.userService.updateUser(this.userId, updatedUser).subscribe({
