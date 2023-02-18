@@ -14,6 +14,7 @@ import { UserCreateComponent } from "./pages/user-create/user-create.component";
 import { SecurityQuestionsComponent } from "./pages/security-questions/security-questions.component";
 import { UserListComponent } from "./pages/user-list/user-list.component";
 import { UserDetailsComponent } from "./pages/user-details/user-details.component";
+import { ContactComponent } from "./pages/contact/contact.component";
 
 const routes: Routes = [
   {
@@ -40,8 +41,12 @@ const routes: Routes = [
         path: "users/create/new",
         component: UserCreateComponent,
       },
+      {
+        path: "contact",
+        component: ContactComponent,
+      },
     ],
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
   },
   {
     path: "session",

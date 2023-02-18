@@ -1,21 +1,20 @@
 <header>
-  <img id="header-logo" src="../../../assets/bobs.png">
+  <img id="header-logo" src="../../../assets/bobs.png" routerLink="/" />
   <nav>
-    <a class="nav-link" href="./about">About</a>
-    <a class="nav-link" href="./services">Create Invoice</a>
-    <a class="nav-link" href="./Contact">Contact</a>
-    <div id="admin-link"><span class="material-symbols-outlined">manage_accounts</span>
+    <a class="nav-link" routerLink="about">About</a>
+    <a class="nav-link" routerLink="services">Create Invoice</a>
+    <a class="nav-link" routerLink="contact">Contact</a>
+    <div id="admin-link">
+      <span class="material-symbols-outlined">manage_accounts</span>
       <ul id="admin-nav">
         <li><a href="./#/sq">Security Questions</a></li>
-        <br>
+        <br />
         <li><a href="./#/users">Users</a></li>
       </ul>
     </div>
   </nav>
 </header>
 <main>
-<router-outlet></router-outlet>
+  <router-outlet></router-outlet>
 </main>
-<footer>
-  &copy; Bob's Computer Repair Shop
-</footer>
+<footer>&copy; Bob's Computer Repair Shop</footer>

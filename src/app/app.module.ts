@@ -37,6 +37,7 @@ import { SecurityQuestionsComponent } from "./pages/security-questions/security-
 import { ConfirmDialogModule } from "primeng/confirmdialog";
 import { ConfirmationService } from "primeng/api";
 import { UserListComponent } from "./pages/user-list/user-list.component";
+import { ContactComponent } from './pages/contact/contact.component';
 
 @NgModule({
   declarations: [
@@ -49,6 +50,7 @@ import { UserListComponent } from "./pages/user-list/user-list.component";
     UserCreateComponent,
     SecurityQuestionsComponent,
     UserListComponent,
+    ContactComponent,
   ],
   imports: [
     BrowserModule,
