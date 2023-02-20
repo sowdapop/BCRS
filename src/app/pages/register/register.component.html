@@ -8,7 +8,7 @@
 
 <br><br><br>
 
-<div fxLayout="column">
+<div fxLayout="column" style="width: 80%; margin: 0 auto;">
     <br><br>
     <mat-card fxFlex class="card-container mat-elevation-z4">
         <mat-card-title>
@@ -90,7 +90,7 @@
                         <br>
 
                         <div fxLayoutAlign="end">
-                            <button mat-raised-button color="primary" matStepperNext>Next</button>
+                            <button mat-raised-button style="background-color: #000; color: #F0C75E" matStepperNext>Next</button>
                         </div>
                     </form>
                 </mat-step>
@@ -183,8 +183,8 @@
                         <br>
 
                         <div fxLayoutAlign="end">
-                            <button mat-raised-button color="accent" matStepperPrevious>Back</button> &nbsp;&nbsp;
-                            <button mat-raised-button color="primary" [disabled]="!sqForm.valid" matStepperNext>Next</button>
+                            <button mat-raised-button style="background-color: #000; color: #F0C75E" matStepperPrevious>Back</button> &nbsp;&nbsp;
+                            <button mat-raised-button style="background-color: #000; color: #F0C75E" [disabled]="!sqForm.valid" matStepperNext>Next</button>
                         </div>
                     </form>
                 </mat-step>
@@ -228,8 +228,8 @@
                             <br>
 
                             <div fxLayoutAlign="end">
-                                <button mat-raised-button color="accent" matStepperPrevious>Back</button> &nbsp;&nbsp;
-                                <button mat-raised-button (click)="register()" [disabled]="!credForm.valid" color="primary">Register</button>
+                                <button mat-raised-button style="background-color: #000; color: #F0C75E" matStepperPrevious>Back</button> &nbsp;&nbsp;
+                                <button mat-raised-button (click)="register()" [disabled]="!credForm.valid" style="background-color: #000; color: #F0C75E">Register</button>
                             </div>
                         </div>
                     </form>
