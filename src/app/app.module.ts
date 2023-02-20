@@ -46,6 +46,7 @@ import { VerifyUsernameFormComponent } from './shared/forms/verify-username-form
 import { ResetPasswordFormComponent } from './shared/forms/reset-password-form/reset-password-form.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { VerifySecurityQuestionsFormComponent } from './shared/forms/verify-security-questions-form/verify-security-questions-form.component';
+import { AboutComponent } from './pages/about/about.component';
 
 @NgModule({
   declarations: [
@@ -64,6 +65,7 @@ import { VerifySecurityQuestionsFormComponent } from './shared/forms/verify-secu
     ResetPasswordFormComponent,
     NotFoundComponent,
     VerifySecurityQuestionsFormComponent,
+    AboutComponent,
   ],
   imports: [
     BrowserModule,

@@ -16,6 +16,7 @@ import { UserListComponent } from "./pages/user-list/user-list.component";
 import { UserDetailsComponent } from "./pages/user-details/user-details.component";
 import { ContactComponent } from "./pages/contact/contact.component";
 import { RegisterComponent } from "./pages/register/register.component";
+import { AboutComponent } from "./pages/about/about.component";
 
 const routes: Routes = [
   {
@@ -46,6 +47,10 @@ const routes: Routes = [
         path: "contact",
         component: ContactComponent,
       },
+      {
+        path: "about",
+        component: AboutComponent
+      }
     ],
     canActivate: [AuthGuard],
   },

@@ -1,0 +1,33 @@
+.about-container {
+    color: #000;
+    background-color: #fff;
+    width: 60%;
+    margin: 3rem auto;
+    padding: 2rem 5rem;
+    min-height: 70vh;
+}
+
+.about-container h2 {
+    font-family: "Oswald", sans-serif;
+    text-transform: uppercase;
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 2rem;
+}
+
+.about-container p {
+    font-size: 1.2rem;
+    line-height: 1.5rem;
+}
+
+#about-image {
+    width: 100%;
+}
+
+figure {
+    width: 50%;
+    margin: 0 auto;
+    text-align: center;
+    background-color: #000;
+    color: #fff;
+}
