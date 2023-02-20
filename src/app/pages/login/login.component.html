@@ -8,10 +8,10 @@
 -->
 
 <!--Main card-->
-<mat-card class="card-container mat elevation-z0">
+<mat-card class="card-container" style="width: 35%;">
 
     <!--Header-->
-    <mat-card-header>
+    <mat-card-header class="login-header">
         <mat-card-title class="mat-headline card-title login-title">
             Employee Sign-In Page
         </mat-card-title>
@@ -65,7 +65,7 @@
 
             <!--Submit button-->    
                 <mat-card-actions>
-                    <button type="submit" [disabled]="!loginForm.valid">
+                    <button class="button" type="submit" [disabled]="!loginForm.valid">
                         Submit
                     </button>
                 </mat-card-actions>
