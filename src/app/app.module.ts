@@ -45,6 +45,7 @@ import { MatSelectModule } from "@angular/material/select";
 import { VerifyUsernameFormComponent } from './shared/forms/verify-username-form/verify-username-form.component';
 import { ResetPasswordFormComponent } from './shared/forms/reset-password-form/reset-password-form.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
+import { VerifySecurityQuestionsFormComponent } from './shared/forms/verify-security-questions-form/verify-security-questions-form.component';
 
 @NgModule({
   declarations: [
@@ -62,6 +63,7 @@ import { NotFoundComponent } from './pages/not-found/not-found.component';
     VerifyUsernameFormComponent,
     ResetPasswordFormComponent,
     NotFoundComponent,
+    VerifySecurityQuestionsFormComponent,
   ],
   imports: [
     BrowserModule,
