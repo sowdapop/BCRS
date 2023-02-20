@@ -1,0 +1,15 @@
+
+.not-found  {
+    height: 100%;
+    width: 100%;
+    margin-top: 60px;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.figure-found {
+    justify-content: center;
+    align-items: center;
+    border: 2px solid black;      
+}
