@@ -17,6 +17,7 @@ import { UserDetailsComponent } from "./pages/user-details/user-details.componen
 import { ContactComponent } from "./pages/contact/contact.component";
 import { RegisterComponent } from "./pages/register/register.component";
 import { AboutComponent } from "./pages/about/about.component";
+import { NotFoundComponent } from "./pages/not-found/not-found.component";
 
 const routes: Routes = [
   {
@@ -68,6 +69,11 @@ const routes: Routes = [
       }
     ],
   },
+  {
+    path: "**",
+    pathMatch: "full",
+    component: NotFoundComponent
+  }
 ];
 
 @NgModule({

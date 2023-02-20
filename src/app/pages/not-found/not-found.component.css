@@ -6,10 +6,10 @@
     justify-content: center;
     align-items: center;
     text-align: center;
+    margin-bottom: 3rem;
 }
 
 .figure-found {
     justify-content: center;
     align-items: center;
-    border: 2px solid black;      
 }
