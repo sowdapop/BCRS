@@ -1,3 +1,12 @@
+/* 
+Title: register.component.ts
+Author: William Watlington
+Date: 19 February 2023
+Description: register component for bcrs app
+*/
+
+
+// imports 
 import { Component, OnInit } from '@angular/core';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { SecurityQuestion } from 'src/app/shared/models/security-question.interface';
@@ -20,11 +29,13 @@ import { SessionService } from 'src/app/services/session.service';
 })
 export class RegisterComponent implements OnInit {
 
+  // component variable init/types
   securityQuestions: SecurityQuestion[];
   errorMessages: Message[];
   user: User;
   selectedSecurityQuestions: SelectedSecurityQuestion[];
 
+  // form group for contact portion of stepper
   contactForm: FormGroup = this.fb.group({
     firstName: [null, Validators.compose([Validators.required])],
     lastName: [null, Validators.compose([Validators.required])],
@@ -33,6 +44,7 @@ export class RegisterComponent implements OnInit {
     address: [null, Validators.compose([Validators.required])]
   });
 
+  // form group for security question portion of stepper
   sqForm: FormGroup = this.fb.group({
     securityQuestion1: [null, Validators.compose([Validators.required])],
     securityQuestion2: [null, Validators.compose([Validators.required])],
@@ -42,6 +54,7 @@ export class RegisterComponent implements OnInit {
     answerToSecurityQuestion3: [null, Validators.compose([Validators.required])]
   });
 
+  // form group for credential portion of stepper
   credForm: FormGroup = this.fb.group({
     userName: [null, Validators.compose([Validators.required])],
     password: [null, Validators.compose([Validators.required, Validators.pattern('^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$')])]
@@ -53,6 +66,7 @@ export class RegisterComponent implements OnInit {
     this.user={} as User;
     this.selectedSecurityQuestions=[];
 
+    // call findAll security question api and assign result to securityQuestions array
     this.securityQuestionService.findAllQuestions().subscribe({
       next: (res) => {
         this.securityQuestions = res;
@@ -66,11 +80,13 @@ export class RegisterComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  // function that registers new user to database using services/api
   register() {
     const contactInformation = this.contactForm.value;
     const securityQuestions = this.sqForm.value;
     const credentials = this.credForm.value;
 
+    // assign user selected questions/answers to array to be stored in db
     this.selectedSecurityQuestions = [
       {
         questionText: securityQuestions.securityQuestion1,
@@ -86,6 +102,7 @@ export class RegisterComponent implements OnInit {
       }
     ]
 
+    // assign form inputs to new user object
     this.user = {
       userName: credentials.userName,
       password: credentials.password,
@@ -97,6 +114,7 @@ export class RegisterComponent implements OnInit {
       selectedSecurityQuestions: this.selectedSecurityQuestions
     }
 
+    // register user object to db using sessionService/sq api
     this.sessionService.register(this.user).subscribe({
       next: (res) => {
         console.log(this.user);
