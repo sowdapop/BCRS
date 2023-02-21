@@ -65,9 +65,9 @@ export class VerifySecurityQuestionsFormComponent implements OnInit {
 
   //verify security questions function
   verifySecurityQuestions() {
-    this.verifySecurityQuestionsModel.answerToQuestion1 = this.form.controls['answerToQuestion1'].value;
-    this.verifySecurityQuestionsModel.answerToQuestion2 = this.form.controls['answerToQuestion2'].value;
-    this.verifySecurityQuestionsModel.answerToQuestion3 = this.form.controls['answerToQuestion3'].value;
+    this.verifySecurityQuestionsModel.answerToQuestion1 = this.form.controls['answerToSecurityQuestion1'].value;
+    this.verifySecurityQuestionsModel.answerToQuestion2 = this.form.controls['answerToSecurityQuestion2'].value;
+    this.verifySecurityQuestionsModel.answerToQuestion3 = this.form.controls['answerToSecurityQuestion3'].value;
 
     console.log(this.verifySecurityQuestionsModel);
 
