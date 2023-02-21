@@ -1,3 +1,4 @@
+import { VerifySecurityQuestionsFormComponent } from './shared/forms/verify-security-questions-form/verify-security-questions-form.component';
 import { ResetPasswordFormComponent } from './shared/forms/reset-password-form/reset-password-form.component';
 /* 
 Title: app-routing.module.ts
@@ -80,6 +81,10 @@ const routes: Routes = [
       {
         path: "500",
         component: ErrorComponent
+      },
+      {
+        path: 'verify',
+        component: VerifySecurityQuestionsFormComponent
       }
     ],
   },
