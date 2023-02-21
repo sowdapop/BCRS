@@ -14,7 +14,11 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { HomeComponent } from "./pages/home/home.component";
 import { AuthLayoutComponent } from "./shared/auth-layout/auth-layout.component";
 import { BaseLayoutComponent } from "./shared/base-layout/base-layout.component";
-import { HttpClient, HttpClientModule } from "@angular/common/http";
+import {
+  HttpClient,
+  HttpClientModule,
+  HTTP_INTERCEPTORS,
+} from "@angular/common/http";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { FlexLayoutModule } from "@angular/flex-layout";
 import { MatToolbarModule } from "@angular/material/toolbar";
@@ -37,16 +41,17 @@ import { SecurityQuestionsComponent } from "./pages/security-questions/security-
 import { ConfirmDialogModule } from "primeng/confirmdialog";
 import { ConfirmationService } from "primeng/api";
 import { UserListComponent } from "./pages/user-list/user-list.component";
-import { ContactComponent } from './pages/contact/contact.component';
-import { RegisterComponent } from './pages/register/register.component';
-import { MatListModule } from '@angular/material/list';
-import { MatStepperModule } from '@angular/material/stepper';
+import { ContactComponent } from "./pages/contact/contact.component";
+import { RegisterComponent } from "./pages/register/register.component";
+import { MatListModule } from "@angular/material/list";
+import { MatStepperModule } from "@angular/material/stepper";
 import { MatSelectModule } from "@angular/material/select";
-import { VerifyUsernameFormComponent } from './shared/forms/verify-username-form/verify-username-form.component';
-import { ResetPasswordFormComponent } from './shared/forms/reset-password-form/reset-password-form.component';
-import { NotFoundComponent } from './pages/not-found/not-found.component';
-import { VerifySecurityQuestionsFormComponent } from './shared/forms/verify-security-questions-form/verify-security-questions-form.component';
-import { AboutComponent } from './pages/about/about.component';
+import { VerifyUsernameFormComponent } from "./shared/forms/verify-username-form/verify-username-form.component";
+import { ResetPasswordFormComponent } from "./shared/forms/reset-password-form/reset-password-form.component";
+import { NotFoundComponent } from "./pages/not-found/not-found.component";
+import { VerifySecurityQuestionsFormComponent } from "./shared/forms/verify-security-questions-form/verify-security-questions-form.component";
+import { AboutComponent } from "./pages/about/about.component";
+import { ErrorInterceptor } from "./shared/error.interceptor";
 
 @NgModule({
   declarations: [
@@ -91,9 +96,11 @@ import { AboutComponent } from './pages/about/about.component';
     ConfirmDialogModule,
     MatListModule,
     MatStepperModule,
-    MatSelectModule
+    MatSelectModule,
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
