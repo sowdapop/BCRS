@@ -41,7 +41,7 @@ export class VerifyUsernameFormComponent implements OnInit {
     this.sessionService.verifyUsername(username).subscribe({
       next: (res) => {
         console.log(res);
-        this.router.navigate(['/session/verify-security-questions'], {queryParams: {username: username}, skipLocationChange: true})
+        this.router.navigate(['/session/verify-sq'], {queryParams: {username: username}, skipLocationChange: true})
       },
       error: (e) => {
         this.errorMessages = [
