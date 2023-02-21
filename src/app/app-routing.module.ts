@@ -1,3 +1,4 @@
+import { ResetPasswordFormComponent } from './shared/forms/reset-password-form/reset-password-form.component';
 /* 
 Title: app-routing.module.ts
 Author: William Watlington, Danial Purselley, Kayla McDanel 
@@ -66,6 +67,10 @@ const routes: Routes = [
       {
         path: "register",
         component: RegisterComponent
+      },
+      {
+        path: 'reset-password',
+        component: ResetPasswordFormComponent
       }
     ],
   },
