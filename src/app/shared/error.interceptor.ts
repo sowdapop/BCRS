@@ -5,6 +5,7 @@
  * Description: A web application for a computer repair shop
  */
 
+// this has to be added to the 'providers' array of app.module.ts
 import { Injectable } from "@angular/core";
 import {
   HttpRequest,
