@@ -1,0 +1,25 @@
+.register-header {
+    background-color: #000;
+}
+
+.register-header img {
+    width: 20%;
+    display: block;
+    margin: 0 auto;
+}
+
+#large-text {
+    font-size: 48px;
+    font-weight: lighter;
+    letter-spacing: .2rem;
+}
+
+.title {
+    text-align: center;
+    font-weight: lighter;
+}
+
+.subtitle {
+    text-align: center;
+    font-size: 14px;
+}

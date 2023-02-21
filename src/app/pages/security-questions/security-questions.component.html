@@ -1,0 +1,47 @@
+<div class="container">
+    <h1>Security Question Configuration</h1>
+    <h3>Current Questions</h3>
+    <ul>
+        <li class="list-item" *ngFor="let item of questions">
+            <div class="question">
+                {{item.text}}
+                <button type="button" class="material-symbols-outlined" (click)="showModal('edit', item)">edit</button>
+                <button type="button" class="material-symbols-outlined" (click)="showModal('delete', item)">delete</button>
+            </div>
+        </li>
+    </ul>
+    <div class="add-new" (click)="showModal('create')">+ New Question</div>
+</div>
+
+<div id="modal-bg">
+    <div id="modal" class="glow-border">
+        <div id="delete-modal-content">
+            <h3>Confirm Deletion</h3>
+            <p>delete security question: "{{currentQuestion.text}}"?</p>
+            <div class="modal-button-container">
+                <button type="button" class="modal-button" (click)="deleteQuestion(currentQuestion._id)">Delete</button>
+                <button type="button" class="modal-button" (click)="closeModal()">Cancel</button>
+            </div>
+        </div>
+        <div id="update-modal-content">
+            <h3>Edit Question</h3>
+            <form [formGroup]="updateQuestionForm" (ngSubmit)="updateQuestion(currentQuestion._id); closeModal();">
+                <input type="text" name="text" formControlName="text" id="text" value={{currentQuestion.text}} required>
+                <div class="modal-button-container">
+                    <button type="button" class="modal-button" (click)="updateQuestion(currentQuestion._id)">Update</button>
+                    <button type="button" class="modal-button" (click)="closeModal()">Cancel</button>
+                </div>
+            </form>
+        </div>
+        <div id="create-modal-content">
+            <h3>Create Question</h3>
+            <form [formGroup]="createQuestionForm" (ngSubmit)="createQuestion();">
+                <input type="text" name="text" formControlName="text" id="text" value={{currentQuestion.text}} required>
+                <div class="modal-button-container">
+                    <button type="button" class="modal-button" (click)="createQuestion()">Submit</button>
+                    <button type="button" class="modal-button" (click)="closeModal()">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
