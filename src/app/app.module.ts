@@ -46,21 +46,13 @@ import { RegisterComponent } from "./pages/register/register.component";
 import { MatListModule } from "@angular/material/list";
 import { MatStepperModule } from "@angular/material/stepper";
 import { MatSelectModule } from "@angular/material/select";
-<<<<<<< HEAD
-import { VerifyUsernameFormComponent } from './shared/forms/verify-username-form/verify-username-form.component';
-import { ResetPasswordFormComponent } from './shared/forms/reset-password-form/reset-password-form.component';
-import { NotFoundComponent } from './pages/not-found/not-found.component';
-import { VerifySecurityQuestionsFormComponent } from './shared/forms/verify-security-questions-form/verify-security-questions-form.component';
-import { AboutComponent } from './pages/about/about.component';
-import { ErrorComponent } from './pages/error/error.component';
-=======
 import { VerifyUsernameFormComponent } from "./shared/forms/verify-username-form/verify-username-form.component";
 import { ResetPasswordFormComponent } from "./shared/forms/reset-password-form/reset-password-form.component";
 import { NotFoundComponent } from "./pages/not-found/not-found.component";
 import { VerifySecurityQuestionsFormComponent } from "./shared/forms/verify-security-questions-form/verify-security-questions-form.component";
 import { AboutComponent } from "./pages/about/about.component";
 import { ErrorInterceptor } from "./shared/error.interceptor";
->>>>>>> 4aed118c39d0e7d45c9547a5d4bba20f25fcb993
+import { ErrorComponent } from "./pages/error/error.component";
 
 @NgModule({
   declarations: [
