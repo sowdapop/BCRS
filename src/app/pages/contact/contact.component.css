@@ -11,7 +11,9 @@
 
 .wrapper {
   width: 100%;
-  background-color: #000;
+  background-color: #292828;
+
+  /* background-color: #000; */
 }
 
 .card-wrapper {
@@ -20,7 +22,9 @@
   justify-content: space-evenly;
   row-gap: 20px;
   column-gap: 20px;
-  background-color: #000;
+  background-color: #292828;
+
+  /* background-color: #000; */
 }
 
 mat-card-title {

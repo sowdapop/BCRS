@@ -47,6 +47,7 @@ header nav {
   padding: 1rem;
   top: 0;
   width: auto;
+  z-index: 5;
 }
 
 #admin-nav a {
