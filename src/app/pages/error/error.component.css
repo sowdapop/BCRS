@@ -1,0 +1,14 @@
+.not-found  {
+    height: 100%;
+    width: 100%;
+    margin-top: 60px;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.figure-found {
+    justify-content: center;
+    align-items: center;
+}
