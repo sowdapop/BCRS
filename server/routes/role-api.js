@@ -112,4 +112,46 @@ router.post("/", async (req, res) => {
   }
 });
 
+/**
+ * findAllRoles
+ */
+router.get("/", async (req, res) => {
+  try {
+    //  query the db for enabled roles
+    Role.find({})
+      .where("isDisabled")
+      .equals(false)
+      .exec(function (err, roles) {
+        if (err) {
+          //  if there is a mongoDB error during the query
+          console.log(err);
+          const findAllRolesMongoDBErrorResponse = new ErrorResponse(
+            "501",
+            "MongoDB Server Error",
+            err
+          );
+          res.status(500).send(findAllRolesMongoDBErrorResponse.toObject());
+        } else {
+          //  no query error, Roles returned!!
+          console.log(roles);
+          const findAllRolesResponse = new BaseResponse(
+            "200",
+            "Query successful",
+            roles
+          );
+          res.json(findAllRolesResponse.toObject());
+        }
+      });
+  } catch (error) {
+    //  if there is a server error
+    console.log(error);
+    const createRoleCatchErrorResponse = new ErrorResponse(
+      "500",
+      "Internal Server Error",
+      error.message
+    );
+    res.status(500).send(createRoleCatchErrorResponse.toObject());
+  }
+});
+
 module.exports = router;
