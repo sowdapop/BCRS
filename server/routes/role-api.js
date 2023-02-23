@@ -229,6 +229,37 @@ router.get("/:roleId", async (req, res) => {
 
 /**
  * updateRole
+ * @openapi
+ * /api/roles/{roleId}:
+ *   put:
+ *     tags:
+ *       - Roles
+ *     description: API for updating a role
+ *     summary: update role by ID
+ *     parameters:
+ *       - in: path
+ *         name: roleId
+ *         schema:
+ *           type: string
+ *           description: roleId to update
+ *     requestBody:
+ *       description: new role name
+ *       content:
+ *         application/json:
+ *           schema:
+ *             required:
+ *               - text
+ *             properties:
+ *               text:
+ *                 type: string
+ *                 default: updated role name
+ *     responses:
+ *       '200':
+ *         description: Updated Role
+ *       '500':
+ *         description: Server Exception
+ *       '501':
+ *         description: MongoDB Exception
  */
 router.put("/:roleId", async (req, res) => {
   try {
