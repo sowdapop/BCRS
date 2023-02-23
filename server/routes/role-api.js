@@ -170,11 +170,31 @@ router.get("/", async (req, res) => {
 
 /**
  * findRoleById
+ * @openapi
+ * /api/roles/{roleId}:
+ *   get:
+ *     tags:
+ *       - Roles
+ *     description: API for showing one role
+ *     summary: return role by id
+ *     parameters:
+ *       - in: path
+ *         name: roleId
+ *         schema:
+ *           type: string
+ *           description: roleId
+ *     responses:
+ *       '200':
+ *         description: Found Role
+ *       '500':
+ *         description: Server Exception
+ *       '501':
+ *         description: MongoDB Exception
  */
-router.get("/:id", async (req, res) => {
+router.get("/:roleId", async (req, res) => {
   try {
     //  query the database with the parameters
-    Role.findOne({ _id: req.params.id }, function (err, role) {
+    Role.findOne({ _id: req.params.roleId }, function (err, role) {
       if (err) {
         //  if there is a mongoDB error during the query
         console.log(err);
