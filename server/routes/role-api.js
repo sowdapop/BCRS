@@ -159,13 +159,51 @@ router.get("/", async (req, res) => {
   } catch (error) {
     //  if there is a server error
     console.log(error);
-    const createRoleCatchErrorResponse = new ErrorResponse(
+    const findAllRolesCatchErrorResponse = new ErrorResponse(
       "500",
       "Internal Server Error",
       error.message
     );
-    res.status(500).send(createRoleCatchErrorResponse.toObject());
+    res.status(500).send(findAllRolesCatchErrorResponse.toObject());
   }
 });
 
+/**
+ * findRoleById
+ */
+router.get("/:id", async (req, res) => {
+  try {
+    //  query the database with the parameters
+    Role.findOne({ _id: req.params.id }, function (err, role) {
+      if (err) {
+        //  if there is a mongoDB error during the query
+        console.log(err);
+        const findRoleByIdMongoDBErrorResponse = new ErrorResponse(
+          "501",
+          "MongoDB Server Error",
+          err
+        );
+        res.status(500).send(findRoleByIdMongoDBErrorResponse.toObject());
+      } else {
+        // if no errors, return the role
+        console.log(role);
+        const findRoleByIdResponse = new BaseResponse(
+          "200",
+          "Query successful",
+          role
+        );
+        res.json(findRoleByIdResponse.toObject());
+      }
+    });
+  } catch (error) {
+    //  if there is a server error
+    console.log(error);
+    const findRoleByIdCatchErrorResponse = new ErrorResponse(
+      "500",
+      "Internal Server Error",
+      error.message
+    );
+    res.status(500).send(findRoleByIdCatchErrorResponse.toObject());
+  }
+});
 module.exports = router;
