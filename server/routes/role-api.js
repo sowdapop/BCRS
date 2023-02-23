@@ -315,4 +315,89 @@ router.put("/:roleId", async (req, res) => {
   }
 });
 
+/**
+ * deleteRole
+ */
+router.delete("/:roleId", async (req, res) => {
+  try {
+    //  query the db for the role
+    Role.findOne({ _id: req.params.roleId }, function (err, role) {
+      if (err) {
+        //  if there is a mongoDB error during the query
+        console.log(err);
+        const deleteRoleMongoDBErrorResponse = new ErrorResponse(
+          "501",
+          "MongoDB Server Error",
+          err
+        );
+        res.status(500).send(deleteRoleMongoDBErrorResponse.toObject());
+      } else {
+        //  no error during the query
+        //  aggregate query to see if role is tied to users
+        //  !!NOTICE!! aggregate is in the "User" model not the "Role" model
+        User.aggregate(
+          //  aggregate takes an array of command objects
+          [
+            {
+              $lookup: {
+                from: "roles",
+                localField: "role.text",
+                foreignField: "text",
+                as: "userRoles",
+              },
+            },
+            {
+              $match: {
+                "userRoles.text": role.text,
+              },
+            },
+          ], //end aggregate array
+          function (err, users) {
+            if (err) {
+              //  if there is an error with the aggregate
+              console.log(err);
+              const usersMongoDBErrorResponse = new ErrorResponse(
+                "501",
+                "MongoDB server error",
+                err
+              );
+              res.status(500).send(usersMongoDBErrorResponse.toObject());
+            } else {
+              //  no error during aggregate
+              if (users.length > 0) {
+                //  role is already used by users, don't disable it
+                console.log(
+                  `Role <${role.text}> is in use. It cannot be deleted`
+                );
+                const userRoleAlreadyInUseResponse = new BaseResponse(
+                  "400",
+                  "Role is in use",
+                  role
+                );
+                res.status(400).send(userRoleAlreadyInUseResponse.toObject());
+              }
+              //
+              //
+              //
+              //
+              //
+              //
+              //
+            }
+          }
+        );
+      }
+    });
+  } catch (error) {
+    //  if there is a server error
+    console.log(error);
+    const deleteRoleCatchErrorResponse = new ErrorResponse(
+      "500",
+      "Internal Server Error",
+      error.message
+    );
+    res.status(500).send(deleteRoleCatchErrorResponse.toObject());
+  }
+});
+
 module.exports = router;
