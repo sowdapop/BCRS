@@ -12,11 +12,40 @@ const User = require("../models/user");
 // import our response objects
 const ErrorResponse = require("../services/error-response");
 const BaseResponse = require("../services/base-response");
+const { Router } = require("express");
 // express router
 const router = express.Router();
 
 /**
  * createRole
+ * @openapi
+ * /api/roles:
+ *   post:
+ *     tags:
+ *       - Roles
+ *     description: API for creating a user role
+ *     summary: create a new role
+ *     requestBody:
+ *       description: role name
+ *       content:
+ *         application/json:
+ *           schema:
+ *             required:
+ *               - text
+ *             properties:
+ *               text:
+ *                 type: string
+ *                 default: new role here
+ *               isDisabled:
+ *                 type: boolean
+ *                 default: false
+ *     responses:
+ *       '200':
+ *         description: Role Created
+ *       '500':
+ *         description: Server Exception
+ *       '501':
+ *         description: MongoDB Exception
  */
 router.post("/", async (req, res) => {
   try {
@@ -82,3 +111,5 @@ router.post("/", async (req, res) => {
     res.status(500).send(createRoleCatchErrorResponse.toObject());
   }
 });
+
+module.exports = router;
