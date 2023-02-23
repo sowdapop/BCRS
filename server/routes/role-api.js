@@ -114,6 +114,20 @@ router.post("/", async (req, res) => {
 
 /**
  * findAllRoles
+ * @openapi
+ * /api/roles:
+ *   get:
+ *     tags:
+ *       - Roles
+ *     description: API for show list of all roles
+ *     summary: return all roles in collection
+ *     responses:
+ *       '200':
+ *         description: List of roles
+ *       '500':
+ *         description: Server Exception
+ *       '501':
+ *         description: MongoDB Exception
  */
 router.get("/", async (req, res) => {
   try {
