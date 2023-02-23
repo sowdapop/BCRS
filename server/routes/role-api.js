@@ -273,7 +273,7 @@ router.put("/:roleId", async (req, res) => {
           "MongoDB Server Error",
           err
         );
-        res.status(500).send(updateRoleMongoDBErrorResponse.toObject());
+        res.status(501).send(updateRoleMongoDBErrorResponse.toObject());
       } else {
         //  if no errors set the new role
         role.set({
@@ -289,7 +289,7 @@ router.put("/:roleId", async (req, res) => {
               "MongoDB Server Error",
               err
             );
-            res.status(500).send(updatedRoleMongoDBErrorResponse.toObject());
+            res.status(501).send(updatedRoleMongoDBErrorResponse.toObject());
           } else {
             //  no errors during save, role updated!!!
             console.log(updatedRole);
@@ -317,6 +317,26 @@ router.put("/:roleId", async (req, res) => {
 
 /**
  * deleteRole
+ * @openapi
+ * /api/roles/{roleId}:
+ *   delete:
+ *     tags:
+ *       - Roles
+ *     description: API for disabling a role
+ *     summary: disable a user role
+ *     parameters:
+ *       - in: path
+ *         name: roleId
+ *         schema:
+ *           type: string
+ *           description: roleId
+ *     responses:
+ *       '200':
+ *         description: Role successfully disabled
+ *       '500':
+ *         description: Server Exception
+ *       '501':
+ *         description: MongoDB Exception
  */
 router.delete("/:roleId", async (req, res) => {
   try {
@@ -361,7 +381,7 @@ router.delete("/:roleId", async (req, res) => {
                 "MongoDB server error",
                 err
               );
-              res.status(500).send(usersMongoDBErrorResponse.toObject());
+              res.status(501).send(usersMongoDBErrorResponse.toObject());
             } else {
               //  no error during aggregate
               if (users.length > 0) {
@@ -375,14 +395,36 @@ router.delete("/:roleId", async (req, res) => {
                   role
                 );
                 res.status(400).send(userRoleAlreadyInUseResponse.toObject());
+              } else {
+                //  role not used by anyone, so it can be disabled
+                role.set({
+                  isDisabled: true,
+                });
+                //  save the new role as disabled
+                role.save(function (err, updatedRole) {
+                  if (err) {
+                    //  if an error during mongoDB save
+                    console.log(err);
+                    const updatedRoleMongoDBErrorResponse = new ErrorResponse(
+                      "501",
+                      "MongoDB server error",
+                      err
+                    );
+                    res
+                      .status(501)
+                      .send(updatedRoleMongoDBErrorResponse.toObject());
+                  } else {
+                    //  no errors, successfully disable role!!
+                    console.log(updatedRole);
+                    const roleDeletedResponse = new BaseResponse(
+                      "200",
+                      "Role successfully disabled",
+                      updatedRole
+                    );
+                    res.json(roleDeletedResponse.toObject());
+                  }
+                });
               }
-              //
-              //
-              //
-              //
-              //
-              //
-              //
             }
           }
         );
