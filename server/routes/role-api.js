@@ -226,4 +226,62 @@ router.get("/:roleId", async (req, res) => {
     res.status(500).send(findRoleByIdCatchErrorResponse.toObject());
   }
 });
+
+/**
+ * updateRole
+ */
+router.put("/:roleId", async (req, res) => {
+  try {
+    //  query the db for the id
+    Role.findOne({ _id: req.params.roleId }, function (err, role) {
+      if (err) {
+        //  if there is a mongoDB error during the query
+        console.log(err);
+        const updateRoleMongoDBErrorResponse = new ErrorResponse(
+          "501",
+          "MongoDB Server Error",
+          err
+        );
+        res.status(500).send(updateRoleMongoDBErrorResponse.toObject());
+      } else {
+        //  if no errors set the new role
+        role.set({
+          text: req.body.text,
+        });
+        //  after set, save the role
+        role.save(function (err, updatedRole) {
+          if (err) {
+            //  if there is a mongoDB error during the save
+            console.log(err);
+            const updatedRoleMongoDBErrorResponse = new ErrorResponse(
+              "501",
+              "MongoDB Server Error",
+              err
+            );
+            res.status(500).send(updatedRoleMongoDBErrorResponse.toObject());
+          } else {
+            //  no errors during save, role updated!!!
+            console.log(updatedRole);
+            const updatedRoleResponse = new BaseResponse(
+              "200",
+              "Role Updated",
+              updatedRole
+            );
+            res.json(updatedRoleResponse.toObject());
+          }
+        });
+      }
+    });
+  } catch (error) {
+    //  if there is a server error
+    console.log(error);
+    const updateRoleCatchErrorResponse = new ErrorResponse(
+      "500",
+      "Internal Server Error",
+      error.message
+    );
+    res.status(500).send(updateRoleCatchErrorResponse.toObject());
+  }
+});
+
 module.exports = router;
