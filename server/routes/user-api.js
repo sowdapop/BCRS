@@ -458,6 +458,26 @@ router.get("/:userName/security-questions", async (req, res) => {
 
 /**
  * findUserRole
+ * @openapi
+ * /api/users/{userName}/role:
+ *   get:
+ *     tags:
+ *       - Users
+ *     description: API for finding user role
+ *     summary: return a user
+ *     parameters:
+ *       - in: path
+ *         name: userName
+ *         schema:
+ *           type: string
+ *           description: userName
+ *     responses:
+ *       '200':
+ *         description: User found
+ *       '500':
+ *         description: Server exception
+ *       '501':
+ *         description: MongoDB exception
  */
 router.get("/:userName/role", async (req, res) => {
   try {
