@@ -113,4 +113,84 @@ router.post("/:userName", async (req, res) => {
   }
 });
 
+/**
+ * findPurchasesByService
+ * @openapi
+ * /api/invoices/purchase-graph:
+ *   get:
+ *     tags:
+ *       - Invoices
+ *     description: API for returning aggregate data
+ *     summary: return the purchase services
+ *     responses:
+ *       '200':
+ *         description: Query successful
+ *       '500':
+ *         description: Server Exception
+ *       '501':
+ *         description: MongoDB Exception
+ */
+router.get("/purchase-graph", async (req, res) => {
+  try {
+    //  aggregate services in the invoice collection
+    Invoice.aggregate(
+      //  array of aggregate commands
+      [
+        {
+          //  unwind will flatten the collection to array
+          $unwind: "$lineItems",
+        },
+        {
+          //  group the array items
+          $group: {
+            _id: {
+              title: "$lineItems.title",
+              price: "$lineItems.price",
+            },
+            count: {
+              $sum: 1,
+            },
+          },
+        },
+        {
+          //  sort the items
+          $sort: {
+            "_id.title": 1,
+          },
+        },
+      ],
+      //  callback function
+      function (err, purchaseGraph) {
+        if (err) {
+          //  if there is a mongoDB error during the aggregation
+          console.log(err);
+          const findPurchaseByServiceGraphMongoDBErrorResponse =
+            new ErrorResponse("501", "MongoDB Server Error", err);
+          res
+            .status(501)
+            .send(findPurchaseByServiceGraphMongoDBErrorResponse.toObject());
+        } else {
+          //
+          console.log(purchaseGraph);
+          const findPurchaseByServiceGraphResponse = new BaseResponse(
+            "200",
+            "Query successful",
+            purchaseGraph
+          );
+          res.json(findPurchaseByServiceGraphResponse.toObject());
+        }
+      }
+    );
+  } catch (error) {
+    //  if there is a server error
+    console.log(error);
+    const purchaseGraphCatchErrorResponse = new ErrorResponse(
+      "500",
+      "Internal Server Error",
+      error.message
+    );
+    res.status(500).send(purchaseGraphCatchErrorResponse.toObject());
+  }
+});
+
 module.exports = router;
