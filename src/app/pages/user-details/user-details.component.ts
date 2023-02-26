@@ -6,11 +6,13 @@
  */
 
 import { Component, OnInit } from "@angular/core";
-import { User } from "src/app/shared/models/user.interface";
+import { User } from "../../shared/models/user.interface";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
-import { UserService } from "src/app/services/user.service";
+import { UserService } from "../../services/user.service";
 import { Message } from "primeng/api";
+import { RoleService } from "../../services/role.service";
+import { Role } from "../../shared/models/role";
 
 //form build for user details page
 
@@ -23,6 +25,7 @@ export class UserDetailsComponent implements OnInit {
   user: User;
   userId: string;
   errorMessages: Message[];
+  roles: Role[];
 
   form: FormGroup = this.fb.group({
     firstName: [null, Validators.compose([Validators.required])],
@@ -30,17 +33,21 @@ export class UserDetailsComponent implements OnInit {
     phoneNumber: [null, Validators.compose([Validators.required])],
     email: [null, Validators.compose([Validators.required, Validators.email])],
     address: [null, Validators.compose([Validators.required])],
+    role: [null, Validators.compose([Validators.required])]
   });
 
   constructor(
     private route: ActivatedRoute,
     private fb: FormBuilder,
     private router: Router,
-    private userService: UserService
+    private userService: UserService,
+    private roleService: RoleService
   ) {
     this.userId = this.route.snapshot.paramMap.get("userId") ?? "";
     this.user = {} as User;
     this.errorMessages = [];
+    this.roles = [];
+    
 
     this.userService.findUserById(this.userId).subscribe({
       next: (res) => {
@@ -55,8 +62,18 @@ export class UserDetailsComponent implements OnInit {
         this.form.controls["phoneNumber"].setValue(this.user.phoneNumber);
         this.form.controls["email"].setValue(this.user.email);
         this.form.controls["address"].setValue(this.user.address);
+        this.form.controls["role"].setValue(this.user.role?.text ?? 'standard');
 
         console.log(this.user);
+
+        this.roleService.findAllRoles().subscribe({
+          next: (res) => {
+            this.roles = res.data;
+          },
+          error: (e) => {
+            console.log(e);
+          }
+        })
       },
     });
   }
@@ -71,7 +88,10 @@ export class UserDetailsComponent implements OnInit {
       phoneNumber: this.form.controls["phoneNumber"].value,
       email: this.form.controls["email"].value,
       address: this.form.controls["address"].value,
-      selectedSecurityQuestions: this.form.controls['selectedSecurityQuestions'].value
+      selectedSecurityQuestions: this.form.controls['selectedSecurityQuestions'].value,
+      role: {
+        text: this.form.controls['role'].value
+      }
     };
 
     this.userService.updateUser(this.userId, updatedUser).subscribe({
