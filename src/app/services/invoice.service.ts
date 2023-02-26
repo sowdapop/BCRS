@@ -18,6 +18,7 @@ export class InvoiceService {
 
   constructor( private http: HttpClient) { }
 
+  //function that pulls info from invoice.ts into one form
   createInvoice(userName: string, invoice: Invoice): Observable<any> {
     return this.http.post(`/api/invoices/${userName}`, {
       userName: userName,
@@ -29,6 +30,7 @@ export class InvoiceService {
     })
   }
 
+  //function that pulls purchases from db to put in graph
   findPurchasesByServiceGraph(): Observable<any> {
     return this.http.get(`/api/invoices/purchases-graph`);
   }

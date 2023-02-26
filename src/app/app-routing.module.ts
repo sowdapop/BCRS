@@ -30,7 +30,7 @@ const routes: Routes = [
     component: BaseLayoutComponent,
     children: [
       {
-        path: "",
+        path: "services",
         component: HomeComponent,
       },
       {
@@ -95,7 +95,7 @@ const routes: Routes = [
       {
         path: "verify-username",
         component: VerifyUsernameFormComponent,
-      },
+      }
     ],
   },
   {

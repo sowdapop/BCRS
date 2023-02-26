@@ -54,6 +54,8 @@ import { AboutComponent } from "./pages/about/about.component";
 import { ErrorInterceptor } from "./shared/error.interceptor";
 import { ErrorComponent } from "./pages/error/error.component";
 import { RoleListComponent } from './pages/role-list/role-list.component';
+import { InvoiceSummaryDialogComponent } from './shared/invoice-summary-dialog/invoice-summary-dialog.component';
+import { MatCheckboxModule } from '@angular/material/checkbox'
 
 @NgModule({
   declarations: [
@@ -75,6 +77,7 @@ import { RoleListComponent } from './pages/role-list/role-list.component';
     AboutComponent,
     ErrorComponent,
     RoleListComponent,
+    InvoiceSummaryDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -101,6 +104,7 @@ import { RoleListComponent } from './pages/role-list/role-list.component';
     MatListModule,
     MatStepperModule,
     MatSelectModule,
+    MatCheckboxModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
