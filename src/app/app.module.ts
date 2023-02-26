@@ -53,6 +53,7 @@ import { VerifySecurityQuestionsFormComponent } from "./shared/forms/verify-secu
 import { AboutComponent } from "./pages/about/about.component";
 import { ErrorInterceptor } from "./shared/error.interceptor";
 import { ErrorComponent } from "./pages/error/error.component";
+import { RoleListComponent } from './pages/role-list/role-list.component';
 
 @NgModule({
   declarations: [
@@ -73,6 +74,7 @@ import { ErrorComponent } from "./pages/error/error.component";
     VerifySecurityQuestionsFormComponent,
     AboutComponent,
     ErrorComponent,
+    RoleListComponent,
   ],
   imports: [
     BrowserModule,

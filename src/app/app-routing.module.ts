@@ -1,6 +1,6 @@
-import { VerifyUsernameFormComponent } from './shared/forms/verify-username-form/verify-username-form.component';
-import { VerifySecurityQuestionsFormComponent } from './shared/forms/verify-security-questions-form/verify-security-questions-form.component';
-import { ResetPasswordFormComponent } from './shared/forms/reset-password-form/reset-password-form.component';
+import { VerifyUsernameFormComponent } from "./shared/forms/verify-username-form/verify-username-form.component";
+import { VerifySecurityQuestionsFormComponent } from "./shared/forms/verify-security-questions-form/verify-security-questions-form.component";
+import { ResetPasswordFormComponent } from "./shared/forms/reset-password-form/reset-password-form.component";
 /* 
 Title: app-routing.module.ts
 Author: William Watlington, Danial Purselley, Kayla McDanel 
@@ -22,6 +22,7 @@ import { RegisterComponent } from "./pages/register/register.component";
 import { AboutComponent } from "./pages/about/about.component";
 import { NotFoundComponent } from "./pages/not-found/not-found.component";
 import { ErrorComponent } from "./pages/error/error.component";
+import { RoleListComponent } from "./pages/role-list/role-list.component";
 
 const routes: Routes = [
   {
@@ -54,8 +55,12 @@ const routes: Routes = [
       },
       {
         path: "about",
-        component: AboutComponent
-      }
+        component: AboutComponent,
+      },
+      {
+        path: "roles",
+        component: RoleListComponent,
+      },
     ],
     canActivate: [AuthGuard],
   },
@@ -69,35 +74,35 @@ const routes: Routes = [
       },
       {
         path: "register",
-        component: RegisterComponent
+        component: RegisterComponent,
       },
       {
-        path: 'reset-password',
-        component: ResetPasswordFormComponent
+        path: "reset-password",
+        component: ResetPasswordFormComponent,
       },
       {
         path: "404",
-        component: NotFoundComponent
+        component: NotFoundComponent,
       },
       {
         path: "500",
-        component: ErrorComponent
+        component: ErrorComponent,
       },
       {
-        path: 'verify-sq',
-        component: VerifySecurityQuestionsFormComponent
+        path: "verify-sq",
+        component: VerifySecurityQuestionsFormComponent,
       },
       {
-        path: 'verify-username',
-        component: VerifyUsernameFormComponent
-      }
+        path: "verify-username",
+        component: VerifyUsernameFormComponent,
+      },
     ],
   },
   {
     path: "**",
     pathMatch: "full",
-    component: NotFoundComponent
-  }
+    component: NotFoundComponent,
+  },
 ];
 
 @NgModule({
