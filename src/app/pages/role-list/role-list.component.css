@@ -1,0 +1,36 @@
+.wrapper {
+  background-color: #fff;
+  color: #000;
+  width: 60%;
+  margin: 8rem auto;
+  min-height: 50vh;
+  position: relative;
+}
+
+mat-card {
+  background-color: transparent;
+  padding: 0;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+.header {
+  text-align: center;
+  padding: 2rem;
+}
+
+.role {
+  padding: 0 2rem;
+}
+
+h1 {
+  font-size: 3rem;
+  font-family: "Oswald", sans-serif;
+}
+
+.subtitle {
+  font-family: "Roboto", sans-serif;
+  width: 100%;
+}
