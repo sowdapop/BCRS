@@ -55,7 +55,9 @@ import { ErrorInterceptor } from "./shared/error.interceptor";
 import { ErrorComponent } from "./pages/error/error.component";
 import { RoleListComponent } from './pages/role-list/role-list.component';
 import { InvoiceSummaryDialogComponent } from './shared/invoice-summary-dialog/invoice-summary-dialog.component';
-import { MatCheckboxModule } from '@angular/material/checkbox'
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { ChartModule } from 'primeng/chart';
+import { PurchasesByServiceGraphComponent } from "./pages/purchases-by-service-graph/purchases-by-service-graph.component";
 
 @NgModule({
   declarations: [
@@ -78,6 +80,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox'
     ErrorComponent,
     RoleListComponent,
     InvoiceSummaryDialogComponent,
+    PurchasesByServiceGraphComponent
   ],
   imports: [
     BrowserModule,
@@ -104,7 +107,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox'
     MatListModule,
     MatStepperModule,
     MatSelectModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    ChartModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },

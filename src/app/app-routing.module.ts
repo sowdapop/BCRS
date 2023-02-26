@@ -23,6 +23,7 @@ import { AboutComponent } from "./pages/about/about.component";
 import { NotFoundComponent } from "./pages/not-found/not-found.component";
 import { ErrorComponent } from "./pages/error/error.component";
 import { RoleListComponent } from "./pages/role-list/role-list.component";
+import { PurchasesByServiceGraphComponent } from "./pages/purchases-by-service-graph/purchases-by-service-graph.component";
 
 const routes: Routes = [
   {
@@ -95,6 +96,10 @@ const routes: Routes = [
       {
         path: "verify-username",
         component: VerifyUsernameFormComponent,
+      },
+      {
+        path: "graph",
+        component: PurchasesByServiceGraphComponent,
       }
     ],
   },
