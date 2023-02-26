@@ -5,8 +5,10 @@
  * Description: A web application for a computer repair shop
  */-->
 
+ <!--dialog box for invoice confirmation-->
  <div fxLayout="column">
     <mat-card class="mat-elevation-z0">
+        <!--title pulls username from db and creates timestamp-->
         <mat-card-title mat-dialog-title style="text-align: center;">
             {{ username }} please confirm your order
         </mat-card-title>
@@ -18,6 +20,7 @@
 
             <div fxLayout="column" fxLayoutGap="10px">
 
+                <!--services card that pulls line item titles and prices into list-->
                 <div fxFlex>
                     <mat-card>
                         <mat-card-title>Services</mat-card-title>
@@ -35,6 +38,7 @@
                     </mat-card>
                 </div>
 
+                <!--services card that pulls parts and labor info from invoice.ts-->
                 <div fxFlex>
                     <mat-card>
                         <mat-card-title>Standard Fees</mat-card-title>
@@ -55,6 +59,7 @@
                     </mat-card>
                 </div>
 
+                <!--total card adds the services, parts, and labor-->
                 <div fxFlex>
                         <mat-card-content>
                             <mat-list>
@@ -73,6 +78,7 @@
     </mat-card>
  </div>
 
+ <!--confirm button adds transaction to db-->
  <div mat-dialog-actions="end">
     <button mat-raised-button matDialogClose="cancel" color="primary">Cancel</button>
     <button mat-raised-button matDialogClose="confirm" color="accent" cdkFocusInitial>Confirm Order</button>

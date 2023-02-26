@@ -15,6 +15,7 @@ import { Invoice } from '../models/invoice';
   templateUrl: './invoice-summary-dialog.component.html',
   styleUrls: ['./invoice-summary-dialog.component.css']
 })
+//defines controls
 export class InvoiceSummaryDialogComponent implements OnInit {
   invoice: Invoice;
   username: string;
@@ -23,6 +24,7 @@ export class InvoiceSummaryDialogComponent implements OnInit {
   labor: number;
   parts: number;
 
+  //links controls to functions
   constructor(@Inject(MAT_DIALOG_DATA) public data: any) {
     this.invoice = {} as Invoice;
     this.invoice = data.invoice;
