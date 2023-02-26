@@ -111,7 +111,10 @@ export class RegisterComponent implements OnInit {
       phoneNumber: contactInformation.phoneNumber,
       address: contactInformation.address,
       email: contactInformation.email,
-      selectedSecurityQuestions: this.selectedSecurityQuestions
+      selectedSecurityQuestions: this.selectedSecurityQuestions,
+      role: {
+        text: 'standard'
+      }
     }
 
     // register user object to db using sessionService/sq api

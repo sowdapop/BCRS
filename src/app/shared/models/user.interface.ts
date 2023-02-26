@@ -5,6 +5,7 @@
  * Description: A web application for a computer repair shop
  */
 
+import { Role } from "./role";
 import { SelectedSecurityQuestion } from "./selected-security-question";
 
 export interface User   {
@@ -17,4 +18,5 @@ export interface User   {
     address: string;
     email: string;
     selectedSecurityQuestions: SelectedSecurityQuestion[];
+    role: Role;
 }

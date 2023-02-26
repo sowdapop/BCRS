@@ -28,6 +28,7 @@ export class UserCreateComponent implements OnInit {
     phoneNumber: [null, Validators.compose([Validators.required])],
     address: [null, Validators.compose([Validators.required])],
     email: [null, Validators.compose([Validators.required, Validators.email])],
+    role: [null, Validators.compose([Validators.required])]
   });
 
 user: User;
@@ -53,7 +54,8 @@ errorMessages: Message[] = [];
       phoneNumber: this.form.controls['phoneNumber'].value,
       address: this.form.controls['address'].value,
       email: this.form.controls['email'].value,
-      selectedSecurityQuestions: this.form.controls['selectedSecurityQuestions'].value
+      selectedSecurityQuestions: this.form.controls['selectedSecurityQuestions'].value,
+      role: this.form.controls['role'].value
     };
 
     this.userService.createUser(newUser).subscribe({
