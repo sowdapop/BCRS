@@ -87,12 +87,23 @@
                         <mat-form-field appearance="fill">
                             <textarea matInput required formControlName="address"
                             placeholder="123 First Street City, State Zip">
-                        </textarea>
-            
-                        <mat-error class="error" *ngIf="form.controls['address'].hasError('required') && form.controls['address'].touched">
-                            Address is required.
-                        </mat-error>
+                            </textarea>
+                
+                            <mat-error class="error" *ngIf="form.controls['address'].hasError('required') && form.controls['address'].touched">
+                                Address is required.
+                            </mat-error>
                         </mat-form-field>
+
+                        <!-- Role -->
+                        <mat-form-field appearance="fill">
+                            <mat-label>Role</mat-label>    
+                            <mat-select>
+                                <mat-option *ngFor="let role of roles" [value]="role.text">
+                                    {{role.text}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        
                         </div>
             
 

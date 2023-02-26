@@ -68,6 +68,7 @@ export class UserDetailsComponent implements OnInit {
 
         this.roleService.findAllRoles().subscribe({
           next: (res) => {
+            console.log(res);
             this.roles = res.data;
           },
           error: (e) => {

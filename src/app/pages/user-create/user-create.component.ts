@@ -11,6 +11,8 @@ import { Router } from '@angular/router';
 import { UserService } from 'src/app/services/user.service';
 import { Message } from 'primeng/api';
 import { User } from 'src/app/shared/models/user.interface';
+import { Role } from 'src/app/shared/models/role';
+import { RoleService } from 'src/app/services/role.service';
 
 @Component({
   selector: 'app-user-create',
@@ -34,11 +36,25 @@ export class UserCreateComponent implements OnInit {
 user: User;
 userId: string;
 errorMessages: Message[] = [];
+roles: Role[] = [];
 
 
-  constructor(private fb: FormBuilder, private router: Router, private userService: UserService) {
+  constructor(private fb: FormBuilder,
+     private router: Router, 
+     private userService: UserService,
+     private roleService: RoleService) {
     this.user = {} as User;
     this.userId = '';
+    this.roles = [];
+
+    this.roleService.findAllRoles().subscribe({
+      next: (res) => {
+        this.roles = res.data;
+      },
+      error: (e) => {
+        console.log(e);
+      }
+    })
    }
 
   ngOnInit(): void {
