@@ -13,6 +13,8 @@ import { UserService } from "../../services/user.service";
 import { Message } from "primeng/api";
 import { RoleService } from "../../services/role.service";
 import { Role } from "../../shared/models/role";
+import { SecurityQuestionService } from "src/app/services/security-question.service";
+import { SecurityQuestion } from "src/app/shared/models/security-question.interface";
 
 //form build for user details page
 
@@ -26,6 +28,7 @@ export class UserDetailsComponent implements OnInit {
   userId: string;
   errorMessages: Message[];
   roles: Role[];
+  securityQuestions: SecurityQuestion[];
 
   form: FormGroup = this.fb.group({
     firstName: [null, Validators.compose([Validators.required])],
@@ -33,7 +36,9 @@ export class UserDetailsComponent implements OnInit {
     phoneNumber: [null, Validators.compose([Validators.required])],
     email: [null, Validators.compose([Validators.required, Validators.email])],
     address: [null, Validators.compose([Validators.required])],
-    role: [null, Validators.compose([Validators.required])]
+    role: [null, Validators.compose([Validators.required])],
+    securityQuestion: [null, Validators.compose([Validators.required])],
+    answerToSecurityQuestion: [null, Validators.compose([Validators.required])]
   });
 
   constructor(
@@ -41,12 +46,14 @@ export class UserDetailsComponent implements OnInit {
     private fb: FormBuilder,
     private router: Router,
     private userService: UserService,
-    private roleService: RoleService
+    private roleService: RoleService,
+    private securityQuestionService: SecurityQuestionService
   ) {
     this.userId = this.route.snapshot.paramMap.get("userId") ?? "";
     this.user = {} as User;
     this.errorMessages = [];
     this.roles = [];
+    this.securityQuestions = [];
     
 
     this.userService.findUserById(this.userId).subscribe({
@@ -75,9 +82,20 @@ export class UserDetailsComponent implements OnInit {
             console.log(e);
           }
         })
-      },
+      }
     });
-  }
+
+    // call findAll security question api and assign result to securityQuestions array
+    this.securityQuestionService.findAllQuestions().subscribe({
+      next: (res) => {
+        this.securityQuestions = res;
+      },
+      error: (e) => {
+        console.log(e);
+      }
+    })
+   }
+
 
   ngOnInit(): void {}
 
