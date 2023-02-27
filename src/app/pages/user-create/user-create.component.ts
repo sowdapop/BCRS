@@ -13,6 +13,8 @@ import { Message } from 'primeng/api';
 import { User } from 'src/app/shared/models/user.interface';
 import { Role } from 'src/app/shared/models/role';
 import { RoleService } from 'src/app/services/role.service';
+import { SecurityQuestionService } from 'src/app/services/security-question.service';
+import { SecurityQuestion } from 'src/app/models/security-question';
 
 @Component({
   selector: 'app-user-create',
@@ -30,6 +32,8 @@ export class UserCreateComponent implements OnInit {
     phoneNumber: [null, Validators.compose([Validators.required])],
     address: [null, Validators.compose([Validators.required])],
     email: [null, Validators.compose([Validators.required, Validators.email])],
+    securityQuestion: [null, Validators.compose([Validators.required])],
+    answerToSecurityQuestion: [null, Validators.compose([Validators.required])],
     role: [null, Validators.compose([Validators.required])]
   });
 
@@ -37,19 +41,32 @@ user: User;
 userId: string;
 errorMessages: Message[] = [];
 roles: Role[] = [];
+securityQuestions: SecurityQuestion[];
 
 
   constructor(private fb: FormBuilder,
      private router: Router, 
      private userService: UserService,
-     private roleService: RoleService) {
+     private roleService: RoleService,
+     private securityQuestionService: SecurityQuestionService) {
     this.user = {} as User;
     this.userId = '';
     this.roles = [];
+    this.securityQuestions = [];
 
     this.roleService.findAllRoles().subscribe({
       next: (res) => {
         this.roles = res.data;
+      },
+      error: (e) => {
+        console.log(e);
+      }
+    });
+
+    // call findAll security question api and assign result to securityQuestions array
+    this.securityQuestionService.findAllQuestions().subscribe({
+      next: (res) => {
+        this.securityQuestions = res;
       },
       error: (e) => {
         console.log(e);
@@ -70,7 +87,7 @@ roles: Role[] = [];
       phoneNumber: this.form.controls['phoneNumber'].value,
       address: this.form.controls['address'].value,
       email: this.form.controls['email'].value,
-      selectedSecurityQuestions: this.form.controls['selectedSecurityQuestions'].value,
+      selectedSecurityQuestions: [{'questionText': this.form.controls['securityQuestion'].value, 'answerText': this.form.controls['answerToSecurityQuestion'].value}],
       role: this.form.controls['role'].value
     };
 
