@@ -32,6 +32,6 @@ export class InvoiceService {
 
   //function that pulls purchases from db to put in graph
   findPurchasesByServiceGraph(): Observable<any> {
-    return this.http.get(`/api/invoices/purchases-graph`);
+    return this.http.get(`/api/invoices/purchase-graph`);
   }
 }

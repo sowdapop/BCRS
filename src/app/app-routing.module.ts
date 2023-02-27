@@ -66,6 +66,10 @@ const routes: Routes = [
       {
         path: "roles/:roleId",
         component: RoleDetailsComponent
+      },
+      {
+        path: "graph",
+        component: PurchasesByServiceGraphComponent,
       }
     ],
     canActivate: [AuthGuard],
