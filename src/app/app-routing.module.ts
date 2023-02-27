@@ -24,6 +24,7 @@ import { NotFoundComponent } from "./pages/not-found/not-found.component";
 import { ErrorComponent } from "./pages/error/error.component";
 import { RoleListComponent } from "./pages/role-list/role-list.component";
 import { PurchasesByServiceGraphComponent } from "./pages/purchases-by-service-graph/purchases-by-service-graph.component";
+import { RoleDetailsComponent } from "./pages/role-details/role-details.component";
 
 const routes: Routes = [
   {
@@ -62,6 +63,10 @@ const routes: Routes = [
         path: "roles",
         component: RoleListComponent,
       },
+      {
+        path: "roles/:roleId",
+        component: RoleDetailsComponent
+      }
     ],
     canActivate: [AuthGuard],
   },
