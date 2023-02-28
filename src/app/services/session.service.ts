@@ -46,7 +46,7 @@ export class SessionService {
     return this.http.get('/api/session/verify/users/' + username);
   }
   verifySecurityQuestions(model: VerifySecurityQuestionModel, username: string): Observable<any> {
-    return this.http.post('/api/sessions/verify/users' + username + '/security-questions', {
+    return this.http.post('/api/sessions/verify/users/' + username + '/security-questions', {
       questionText1: model.question1,
       questionText2: model.question2,
       questionText3: model.question3,
