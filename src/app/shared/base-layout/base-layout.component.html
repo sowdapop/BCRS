@@ -2,13 +2,12 @@
   <img id="header-logo" src="../../../assets/bobs.png" routerLink="/" />
   <nav>
     <a class="nav-link" routerLink="about">About</a>
-    <a class="nav-link" routerLink="services">Create Invoice</a>
     <a class="nav-link" routerLink="contact">Contact</a>
     <div id="admin-link">
       <span class="material-symbols-outlined">manage_accounts</span>
       <ul id="admin-nav">
         <li><a href="./#/roles">User Roles</a></li>
-        <br>
+        <br />
         <li><a href="./#/sq">Security Questions</a></li>
         <br />
         <li><a href="./#/users">Users</a></li>
@@ -17,7 +16,9 @@
         <br />
         <li>
           <div fxFlex></div>
-          <button (click)="logout()" mat-button class="navbar-link">Log Out</button>
+          <button (click)="logout()" mat-button class="navbar-link">
+            Log Out
+          </button>
         </li>
       </ul>
     </div>

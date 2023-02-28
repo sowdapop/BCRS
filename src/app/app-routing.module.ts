@@ -32,7 +32,7 @@ const routes: Routes = [
     component: BaseLayoutComponent,
     children: [
       {
-        path: "services",
+        path: "",
         component: HomeComponent,
       },
       {
@@ -65,12 +65,12 @@ const routes: Routes = [
       },
       {
         path: "roles/:roleId",
-        component: RoleDetailsComponent
+        component: RoleDetailsComponent,
       },
       {
         path: "graph",
         component: PurchasesByServiceGraphComponent,
-      }
+      },
     ],
     canActivate: [AuthGuard],
   },
@@ -109,7 +109,7 @@ const routes: Routes = [
       {
         path: "graph",
         component: PurchasesByServiceGraphComponent,
-      }
+      },
     ],
   },
   {
