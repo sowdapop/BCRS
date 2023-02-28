@@ -33,10 +33,11 @@ export class RoleDetailsComponent implements OnInit {
     private router: Router, 
     private roleService: RoleService
   ) {
-    this.roleId = this.route.snapshot.paramMap.get('roleId') ?? '';
+    this.roleId = this.route.snapshot.paramMap.get('roleId') ?? ''; // get role id from url paramater
     this.role = {} as Role;
     this.errorMessages = [];
 
+    // get role information using role service/api
     this.roleService.findRoleById(this.roleId).subscribe({
       next: (res) => {
         this.role = res.data;
@@ -53,10 +54,12 @@ export class RoleDetailsComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  // cancel button function returns user to roles list
   cancel() {
     this.router.navigate(['/roles']);
   }
 
+  // called when save button clicked, uses role service to update role in database with new info
   save() {
     const updatedRole: Role = {
       text: this.roleForm.controls['text'].value
