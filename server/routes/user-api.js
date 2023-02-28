@@ -230,19 +230,7 @@ router.post("/", async (req, res) => {
  *      content:
  *        application/json:
  *          schema:
- *            required:
- *              - userName
- *              - firstName
- *              - lastName
- *              - phoneNumber
- *              - emailAddress
- *              - address
- *              - securityQuestions
  *            properties:
- *              userName:
- *                type: string
- *              password:
- *                type: string
  *              firstName:
  *                type: string
  *              lastName:
@@ -253,15 +241,8 @@ router.post("/", async (req, res) => {
  *                type: string
  *              address:
  *                type: string
- *              securityQuestions:
- *                type: array
- *                items:
- *                  type: object
- *                  properties:
- *                    questionText:
- *                      type: string
- *                    questionAnswer:
- *                      type: string
+ *              role:
+ *                type: string
  *    responses:
  *      '200':
  *        description: User document
@@ -269,54 +250,51 @@ router.post("/", async (req, res) => {
  *        description: Server Exception
  *      '501':
  *        description: MongoDB Exception
- *
  */
 router.put("/:id", async (req, res) => {
   // get user by id, update fields using request body
   try {
     User.findOne({ _id: req.params.id }, function (err, user) {
       if (err) {
+        //  if there is an error during the mondoDB query
         console.log(err);
         res.status(501).send({
           message: `MongoDB Exception: ${err}`,
         });
       } else {
-        if (user) {
-          if (req.body.password) {
-            const hashedPassword = bcrypt.hashSync(
-              req.body.password,
-              saltRounds
+        //  no errors, set the new user details
+        user.set({
+          firstName: req.body.firstName,
+          lastName: req.body.lastName,
+          phoneNumber: req.body.phoneNumber,
+          emailAddress: req.body.emailAddress,
+          address: req.body.address,
+          "role.text": req.body.role,
+          dateModified: Date.now(),
+        });
+        //  save the user to the db
+        user.save(function (err, savedUser) {
+          if (err) {
+            //  if there is an error while saving the user
+            console.log(err);
+            res.status(501).send({
+              message: `MongoDB Exception: ${err}`,
+            });
+          } else {
+            //  no errors, user saved!!!
+            console.log(savedUser);
+            const savedUserResponse = new BaseResponse(
+              "200",
+              "User updated",
+              savedUser
             );
-            user.set({ password: hashedPassword });
+            res.json(savedUserResponse.toObject());
           }
-          user.set({
-            userName: req.body.userName,
-            firstName: req.body.firstName,
-            lastName: req.body.lastName,
-            phoneNumber: req.body.phoneNumber,
-            emailAddress: req.body.emailAddress,
-            address: req.body.address,
-            securityQuestions: req.body.securityQuestions,
-            dateModified: Date.now(),
-          });
-          user.save(function (err, updatedUser) {
-            if (err) {
-              console.log(err);
-              res.status(501).send({
-                message: `MongoDB Exception: ${err}`,
-              });
-            } else {
-              res.json(updatedUser);
-            }
-          });
-        } else {
-          res.status(401).send({
-            message: "ID: " + req.params.id + " does not exist",
-          });
-        }
+        });
       }
     });
   } catch (error) {
+    //  if there is a server error
     res.status(500).send({
       err: "Internal Server Error: " + error.message,
     });
@@ -453,6 +431,65 @@ router.get("/:userName/security-questions", async (req, res) => {
     res
       .status(500)
       .send(findSelectedSecurityQuestionsCatchErrorResponse.toObject());
+  }
+});
+
+/**
+ * findUserRole
+ * @openapi
+ * /api/users/{userName}/role:
+ *   get:
+ *     tags:
+ *       - Users
+ *     description: API for finding user role
+ *     summary: return a user
+ *     parameters:
+ *       - in: path
+ *         name: userName
+ *         schema:
+ *           type: string
+ *           description: userName
+ *     responses:
+ *       '200':
+ *         description: User found
+ *       '500':
+ *         description: Server exception
+ *       '501':
+ *         description: MongoDB exception
+ */
+router.get("/:userName/role", async (req, res) => {
+  try {
+    //  query the db with the username
+    User.findOne({ userName: req.params.userName }, function (err, user) {
+      if (err) {
+        //  handle mongoDB query errors
+        console.log(err);
+        const findUserRoleMongoDBErrorResponse = new ErrorResponse(
+          "501",
+          "MongoDB server error",
+          err
+        );
+        res.status(501).send(findUserRoleMongoDBErrorResponse);
+      } else {
+        //  no errors, return found user!!!
+        console.log(user);
+        const findUserRoleResponse = new BaseResponse(
+          "200",
+          "User roles",
+          user
+        );
+        res.json(findUserRoleResponse.toObject());
+      }
+    });
+  } catch (error) {
+    //  if there is a server error
+    console.log(error);
+    const findUserRoleCatchErrorResponse = new ErrorResponse(
+      "500",
+      "Internal Server Error",
+      error.message
+    );
+    res.status(500).send(findUserRoleCatchErrorResponse.toObject());
   }
 });
 

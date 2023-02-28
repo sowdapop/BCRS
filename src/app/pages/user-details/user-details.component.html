@@ -68,6 +68,36 @@
                 Address is required.
             </mat-error>
             </mat-form-field>
+
+            <mat-form-field fxFlex appearance="fill">
+                <mat-label>Security Question</mat-label>
+                <mat-select required formControlName="securityQuestion">
+                    <mat-option *ngFor="let question of securityQuestions" [value]="question.text">
+                        {{question.text}}
+                    </mat-option>
+                </mat-select>
+                <mat-error class="error" *ngIf="form.controls['securityQuestion'].hasError('required') && form.controls['securityQuestion'].touched">
+                    Required field
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field fxFlex appearance="fill">
+                <mat-label>Answer</mat-label>
+                <input required matInput formControlName="answerToSecurityQuestion">
+                <mat-error class="error" *ngIf="form.controls['answerToSecurityQuestion'].hasError('required') && form.controls['answerToSecurityQuestion'].touched">
+                    Required field
+                </mat-error>
+            </mat-form-field>
+
+            <!-- Role -->
+            <mat-form-field appearance="fill">
+                <mat-label>Role</mat-label>    
+                <mat-select formControlName="role">
+                    <mat-option *ngFor="let role of roles" [value]="role.text">
+                        {{role.text}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
             </div>
         </mat-card-content>
 

@@ -1,13 +1,38 @@
-.main-welcome {
-  margin-top: 30px;
+.main-title {
+  color: #f0c75e;
+  text-align: center;
+  background-color: #000;
+  padding: 20px;
 }
 
 .title {
   text-align: center;
-  font-weight: lighter;
+  font-size: large;
 }
 
-.subtitle {
-  text-align: center;
-  font-size: 14px;
+.products-card {
+  background-color: transparent;
+  padding: 10px;
+  width: 100%;
+}
+
+.products {
+  background-color: transparent;
+  margin: 35px auto;
+  width: 85%;
+  border-radius: 4px;
+}
+
+.services-form {
+  height: 350px;
+  /* margin: 20px; */
+}
+
+.standard-fees {
+  height: 350px;
+  /* margin: 20px; */
+}
+
+mat-card-actions {
+  margin-right: 0px;
 }

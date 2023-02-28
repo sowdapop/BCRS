@@ -53,6 +53,12 @@ import { VerifySecurityQuestionsFormComponent } from "./shared/forms/verify-secu
 import { AboutComponent } from "./pages/about/about.component";
 import { ErrorInterceptor } from "./shared/error.interceptor";
 import { ErrorComponent } from "./pages/error/error.component";
+import { RoleListComponent } from './pages/role-list/role-list.component';
+import { InvoiceSummaryDialogComponent } from './shared/invoice-summary-dialog/invoice-summary-dialog.component';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { ChartModule } from 'primeng/chart';
+import { PurchasesByServiceGraphComponent } from "./pages/purchases-by-service-graph/purchases-by-service-graph.component";
+import { RoleDetailsComponent } from './pages/role-details/role-details.component';
 
 @NgModule({
   declarations: [
@@ -73,6 +79,10 @@ import { ErrorComponent } from "./pages/error/error.component";
     VerifySecurityQuestionsFormComponent,
     AboutComponent,
     ErrorComponent,
+    RoleListComponent,
+    InvoiceSummaryDialogComponent,
+    PurchasesByServiceGraphComponent,
+    RoleDetailsComponent
   ],
   imports: [
     BrowserModule,
@@ -99,6 +109,8 @@ import { ErrorComponent } from "./pages/error/error.component";
     MatListModule,
     MatStepperModule,
     MatSelectModule,
+    MatCheckboxModule,
+    ChartModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
