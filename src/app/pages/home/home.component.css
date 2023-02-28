@@ -11,23 +11,28 @@
 }
 
 .products-card {
-  background-color: #f0c75e;
+  background-color: transparent;
   padding: 10px;
   width: 100%;
 }
 
 .products {
-  background-color: #000;
+  background-color: transparent;
   margin: 35px auto;
   width: 85%;
   border-radius: 4px;
 }
 
 .services-form {
-  margin: 20px;
-  width: 50%;
+  height: 350px;
+  /* margin: 20px; */
 }
 
 .standard-fees {
-  margin: 20px;
+  height: 350px;
+  /* margin: 20px; */
+}
+
+mat-card-actions {
+  margin-right: 0px;
 }
