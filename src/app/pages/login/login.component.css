@@ -1,0 +1,29 @@
+.card-container {
+  width: 50%;
+  margin: 10% auto;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  }
+  
+  .login-header{
+    justify-content: center;
+    align-items: center;
+  }
+
+  .login-title {
+    text-align: center;
+    font-weight: lighter;
+  }
+  
+  .login-subtitle {
+    text-align: center;
+    font-size: 14px;
+  }
+  
+  .button {
+    background-color: #f0c75e;
+    color: black;
+    padding: 5px;
+    font-size: large;
+  }

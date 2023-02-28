@@ -1,0 +1,112 @@
+<div fxLayout="column">
+    <mat-card class="mat-elevation-z0">
+        <mat-card-title style="text-align: center; font-weight: lighter;">
+        Update User Form</mat-card-title>
+        <mat-card-subtitle style="text-align: center; font-weight: lighter;">
+        Fields with an asterisk (*) are required.
+    </mat-card-subtitle>
+    <br />
+
+    <p-messages [(value)]="errorMessages" [enableService]="false"></p-messages>
+
+    <!--User detail form begins-->
+    <form [formGroup]="form" (ngSubmit)="saveUser()" (keydown.enter)="$event.preventDefault()" style="width: 50%; margin: 0 auto;">
+        <mat-card-content>
+
+            <!--User first name input & error message-->
+            <div fxLayout="column" fxLayoutGap="10px">
+                <mat-form-field appearance="fill">
+                    <mat-label>First Name</mat-label>
+                    <input type="text" matInput formControlName="firstName" required />
+
+                    <mat-error class="error" *ngIf="form.controls['firstName'].hasError('required') && form.controls['firstName'].touched">
+                        First name is required.
+                    </mat-error>
+                </mat-form-field>
+
+            <!--User last name input & error message-->
+            <mat-form-field appearance="fill">
+                <mat-label>Last Name</mat-label>
+                <input type="text" matInput formControlName="lastName" required />
+
+                <mat-error class="error" *ngIf="form.controls['lastName'].hasError('required') && form.controls['lastName'].touched">
+                    Last name is required.
+                </mat-error>
+            </mat-form-field>
+
+            <!--User phone number input & error message-->
+            <mat-form-field appearance="fill">
+                <mat-label>Phone number</mat-label>
+                <input type="text" matInput formControlName="phoneNumber" required />
+
+                <mat-error class="error" *ngIf="form.controls['phoneNumber'].hasError('required') && form.controls['phoneNumber'].touched">
+                    Phone number is required.
+                </mat-error>
+            </mat-form-field>
+
+            <!--User email input & error message-->
+            <mat-form-field appearance="fill">
+                <mat-label>Email address</mat-label>
+                <input type="text" matInput formControlName="email" required />
+
+                <mat-error class="error" *ngIf="form.controls['phoneNumber'].hasError('required') && form.controls['email'].touched">
+                    Email is required.
+                </mat-error>
+
+                <mat-error class="error" *ngIf="form.controls['email'].hasError('email') && form.controls['email'].touched">
+                    Invalid email format.
+                </mat-error>
+            </mat-form-field>
+
+            <!--User address input & error message-->
+            <mat-form-field appearance="fill">
+                <textarea matInput required formControlName="address"
+                placeholder="123 First Street City, State Zip">
+            </textarea>
+
+            <mat-error class="error" *ngIf="form.controls['address'].hasError('required') && form.controls['address'].touched">
+                Address is required.
+            </mat-error>
+            </mat-form-field>
+
+            <mat-form-field fxFlex appearance="fill">
+                <mat-label>Security Question</mat-label>
+                <mat-select required formControlName="securityQuestion">
+                    <mat-option *ngFor="let question of securityQuestions" [value]="question.text">
+                        {{question.text}}
+                    </mat-option>
+                </mat-select>
+                <mat-error class="error" *ngIf="form.controls['securityQuestion'].hasError('required') && form.controls['securityQuestion'].touched">
+                    Required field
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field fxFlex appearance="fill">
+                <mat-label>Answer</mat-label>
+                <input required matInput formControlName="answerToSecurityQuestion">
+                <mat-error class="error" *ngIf="form.controls['answerToSecurityQuestion'].hasError('required') && form.controls['answerToSecurityQuestion'].touched">
+                    Required field
+                </mat-error>
+            </mat-form-field>
+
+            <!-- Role -->
+            <mat-form-field appearance="fill">
+                <mat-label>Role</mat-label>    
+                <mat-select formControlName="role">
+                    <mat-option *ngFor="let role of roles" [value]="role.text">
+                        {{role.text}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            </div>
+        </mat-card-content>
+
+        <br />
+        <!--Buttons to cancel or submit-->
+        <mat-card-actions align="end">
+            <button mat-raised-button (click)="cancel()">Cancel</button>
+            <button mat-raised-button [disabled]="!form.valid">Submit</button>
+        </mat-card-actions>
+    </form>
+    </mat-card>
+</div>

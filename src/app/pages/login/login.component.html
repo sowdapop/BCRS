@@ -1,0 +1,91 @@
+<!-- 
+/**
+* Title:  Bob's Computer Repair Shop
+* Authors: Danial Purselley, William Watlington, Kayla McDanel
+* Date: 11 Feb 2023
+* Description: A web application for a computer repair shop
+*/
+-->
+
+<!--Main card-->
+<mat-card class="card-container" style="width: 35%;">
+
+    <!--Header-->
+    <mat-card-header class="login-header">
+        <mat-card-title class="mat-headline card-title login-title">
+            Employee Sign-In Page
+        </mat-card-title>
+
+        <!--Sub Header-->
+        <mat-card-subtitle style="text-align: center;" class="login-subtitle">
+        You must enter a valid username and password
+    </mat-card-subtitle>
+    </mat-card-header>
+
+    <br />
+
+    <mat-card-content>
+
+        <!--Error message handling-->
+        <p-messages [(value)]="errorMessages" [enableService]="false"></p-messages>
+
+        <!--Login Form containing the login function-->
+        <mat-card class="mat elevation=z0">
+            
+            <form [formGroup]="loginForm" (ngSubmit)="login(); loginForm.reset">
+
+        <!--Input form-->
+             <!--Username fields-->
+                <mat-card-content fxLayout="column" fxLayoutGap="10px">
+                    <mat-form-field fxFlex appearance="fill">
+                        <mat-label>Username</mat-label>
+                        <input type="text" matInput formControlName="userName" />
+
+                        <!--Error message for touched field-->
+                        <mat-error class="error" *ngIf="loginForm.controls['userName'].hasError('required') && loginForm.controls['userName'].touched">
+                         Username is required   
+                        </mat-error>
+                    </mat-form-field>
+
+            <!--Password fields-->
+                    <mat-form-field fxFlex appearance="fill">
+                        <mat-label>Password</mat-label>
+                        <input type="password" matInput formControlName="password" />
+
+                        <mat-error class="error" *ngIf="loginForm.controls['password'].hasError('required') && loginForm.controls['password'].touched">
+                            Password is required
+                        </mat-error>
+
+                        <mat-error class="error" *ngIf="loginForm.controls['password'].hasError('pattern') && loginForm.controls['password'].touched">
+                            Password must be at least 8 characters and contain one letter and one number
+                        </mat-error>
+                    </mat-form-field>
+
+                </mat-card-content>
+
+            <!--Submit button-->    
+                <mat-card-actions>
+                    <button class="button" type="submit" [disabled]="!loginForm.valid" color="primary">
+                        Submit
+                    </button>
+                </mat-card-actions>
+
+                <br />
+
+            <!--Forgot password link-->
+            <div fxLayout="row">
+                <div class="login-footer-container">
+                    <div fxFlex class="center-text">
+                        <a class="login-footer-link" routerLink="../verify-username">Forgot password?</a>
+                    </div>
+                </div>
+            </div>
+            <div fxLayout="row">
+                <div class="register-button">
+                    <a class="login-footer-link" routerLink="../register"><h4>New User? Register here</h4></a>
+                </div>
+            </div>
+        </form>
+    </mat-card>
+</mat-card-content>
+</mat-card>

@@ -1,35 +1,30 @@
-<div fxLayout="column">
-
-  <!-- navigation -->
-  <nav fxFlex>
-    <mat-toolbar>
-      <!-- navbar container -->
-      <div class="navbar-container">
-        <!-- logo -->
-        <button class="logo" routerLink="/" mat-button>BCRS</button>
-
-        <button class="navbar-link" routerLink="/" mat-button>Home</button>
-        <button class="navbar-link" mat-button>About</button>
-      </div>
-
-    </mat-toolbar>
+<header>
+  <img id="header-logo" src="../../../assets/bobs.png" routerLink="/" />
+  <nav>
+    <a class="nav-link" routerLink="about">About</a>
+    <a class="nav-link" routerLink="contact">Contact</a>
+    <div id="admin-link">
+      <span class="material-symbols-outlined">manage_accounts</span>
+      <ul id="admin-nav">
+        <li><a href="./#/roles">User Roles</a></li>
+        <br />
+        <li><a href="./#/sq">Security Questions</a></li>
+        <br />
+        <li><a href="./#/users">Users</a></li>
+        <br />
+        <li><a href="./#/graph">Purchases By Service</a></li>
+        <br />
+        <li>
+          <div fxFlex></div>
+          <button (click)="logout()" mat-button class="navbar-link">
+            Log Out
+          </button>
+        </li>
+      </ul>
+    </div>
   </nav>
-
-  <!-- main content -->
-  <div fxFlex>
-    <main class="main-content" fxFlex="100%;">
-      <router-outlet></router-outlet>
-    </main>
-  </div>
-
-  <!-- footer -->
-  <div fxFlex>
-    <footer class="footer">
-      <mat-toolbar class="footer-content">
-        <p>
-          &copy; {{year | date: 'yyyy'}} - nodebucket - <a href="https://www.bellevue.edu/" class="bu-link" target="_blank">Bellevue University</a>
-        </p>
-      </mat-toolbar>
-    </footer>
-  </div>
-</div>
+</header>
+<main>
+  <router-outlet></router-outlet>
+</main>
+<footer>&copy; Bob's Computer Repair Shop</footer>
